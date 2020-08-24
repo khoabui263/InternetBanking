@@ -1,0 +1,34 @@
+<div class="form-group">
+    <mat-form-field class="example-half-width" *ngIf="showSender">
+        <mat-label>Tài khoản chuyển</mat-label>
+        <input matInput type="text" [(ngModel)]="napTienModel.accountSender">
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Tài khoản thụ hưởng</mat-label>
+        <input matInput type="text" [(ngModel)]="napTienModel.accountReceive">
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Số tiền chuyển</mat-label>
+        <input matInput currencyMask [(ngModel)]="napTienModel.money" [options]="{ align: 'left', prefix: '', suffix: ' VND', precision: 0,
+            thousands: '.', allowNegative: false, min: '0', max: 10000000 }" />
+    </mat-form-field>
+    <!-- <mat-form-field class="example-half-width">
+        <mat-label>Chọn loại nạp tiền</mat-label>
+        <mat-select (selectionChange)="changeTypeTranfers($event)">
+            <mat-option *ngFor="let type of types" [value]="type.value">
+                {{type.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    {{selectedType}} [(ngModel)]="napTienModel.selectedType"-->
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+        (change)="changeTypeTranfers($event)" [value]="napTienModel.selectedType">
+        <mat-radio-button class="example-radio-button" *ngFor="let type of types" [value]="type.value">
+            {{type.viewValue}}
+        </mat-radio-button>
+    </mat-radio-group>
+</div>
+<div class="example-button-row">
+    <button mat-raised-button color="primary">Tạo tài khoản</button>
+    <button mat-raised-button color="warn">Hủy</button>
+</div>

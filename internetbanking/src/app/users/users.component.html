@@ -1,0 +1,156 @@
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0">Khoa Banking</a>
+    <h3 style="color: white; padding-top: 10px;">Xin chào {{name}}</h3>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a style="color: white;" class="nav-link" [routerLink]="" (click)="logOut()">Đăng xuất</a>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <div class="list-group" style="margin-top: -5px;">
+                    <mat-accordion multi="false">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <img class="title" src="../../assets/icon/bank-account.png">
+                                    Thông tin tài khoản
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-action-row>
+                                <a [routerLink]="['/users/home/payment-account']" class="link">
+                                    <img src="../../assets/icon/list.png" class="text">
+                                    <p class="text">Danh sách tài khoản</p>
+                                </a>
+                            </mat-action-row>
+                            <mat-action-row>
+                                <a [routerLink]="['/users/home/change-password']"  class="link">
+                                    <img src="../../assets/icon/changePassword.png" class="text">
+                                    <p class="text">Thay đổi mật khẩu</p>
+                                </a>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <img class="title" src="../../assets/icon/money-transfer.png">
+                                    Chuyển khoản
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-action-row>
+                                <a [routerLink]="['/users/home/transfer']"  class="link">
+                                    <img src="../../assets/icon/money-transfer.png" class="text">
+                                    <p class="text">Chuyển khoản nội bộ</p>
+                                </a>
+                            </mat-action-row>
+                            <mat-action-row>
+                                <a [routerLink]="['/users/home/transfer']"  class="link">
+                                    <img src="../../assets/icon/money-transfer.png" class="text">
+                                    <p class="text">Chuyển khoản liên ngân hàng</p>
+                                </a>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <img class="title" src="../../assets/icon/history-transfer.png">
+                                    Lịch sử giao dịch
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-action-row>
+                                <a [routerLink]="['/users/home/history-transfer']"  class="link">
+                                    <img src="../../assets/icon/list.png" class="text">
+                                    <p class="text">Danh sách các giao dịch</p>
+                                </a>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <img class="title" src="../../assets/icon/debt.png">
+                                    Quản lý nhắc nợ
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-action-row>
+                                <a [routerLink]="['/users/home/create-debt']"  class="link">
+                                    <img src="../../assets/icon/bank-account.png" class="text">
+                                    <p class="text">Tạo nhắc nợ</p>
+                                </a>
+                            </mat-action-row>
+                            <mat-action-row>
+                                <a [routerLink]="['/users/home/list-debt']"  class="link">
+                                    <img src="../../assets/icon/list.png" class="text">
+                                    <p class="text">Danh sách nhắc nợ</p>
+                                </a>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <img class="title" src="../../assets/icon/reminder.png">
+                                    Quản lý tên gợi nhớ
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-action-row>
+                                <a [routerLink]="['/users/home/create-reminder']"  class="link">
+                                    <img src="../../assets/icon/bank-account.png" class="text">
+                                    <p class="text">Tạo tên gợi nhớ</p>
+                                </a>
+                            </mat-action-row>
+                            <mat-action-row>
+                                <a [routerLink]="['/users/home/list-reminder']"  class="link">
+                                    <img src="../../assets/icon/list.png" class="text">
+                                    <p class="text">Danh sách tên gợi nhớ</p>
+                                </a>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <!-- <a [routerLink]="['/users/home/payment-account']" class="list-group-item">
+                        <img src="../../assets/icon/bank-account.png">
+                        Thông tin tài khoản
+                    </a>
+                    <a [routerLink]="['/users/home/transfer']" class="list-group-item">
+                        <img src="../../assets/icon/money-transfer.png">
+                        Chuyển khoản
+                    </a>
+                    <a [routerLink]="['/users/home/history-transfer']" class="list-group-item">
+                        <img src="../../assets/icon/history-transfer.png">
+                        Lịch sử giao dịch
+                    </a>
+                    <a [routerLink]="['/users/home/reminder-manager']" class="list-group-item">
+                        <img src="../../assets/icon/reminder.png">
+                        Quản lý tên gợi nhớ
+                    </a>
+                    <a [routerLink]="['/users/home/debt-manager']" class="list-group-item">
+                        <img src="../../assets/icon/debt.png">
+                        Quản lý nợ
+                    </a> -->
+
+                    <!-- <button mat-button [matMenuTriggerFor]="accountMenu" class="group-menu">
+                        <img src="../../assets/icon/bank-account.png">
+                        Thông tin tài khoản
+                    </button>
+                    <mat-menu #accountMenu="matMenu" class="mat-menu-content">
+                        <button [routerLink]="['/users/home/transfer']" mat-menu-item class="menucontainer">
+                            <img src="../../assets/icon/list.png">
+                            Danh sách gợi nhớ
+                        </button>
+                        <button mat-menu-item class="menucontainer">
+                            <img src="../../assets/icon/changePassword.png">
+                            Đổi mật khẩu
+                        </button>
+                    </mat-menu> -->
+
+                </div>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <router-outlet></router-outlet>
+        </main>
+
+    </div>
+</div>

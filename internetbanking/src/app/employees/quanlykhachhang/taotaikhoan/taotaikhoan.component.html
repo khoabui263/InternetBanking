@@ -1,0 +1,27 @@
+<div class="form-group">
+    <mat-form-field class="example-half-width">
+        <mat-label>Họ tên</mat-label>
+        <input matInput type="text" [(ngModel)]="taoTaiKhoanModel.hoten">
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="taoTaiKhoanModel.email">
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Số điện thoại</mat-label>
+        <input matInput type="number" [(ngModel)]="taoTaiKhoanModel.soDienThoai">
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Số tiền nạp lần đầu</mat-label>
+        <input matInput currencyMask [(ngModel)]="taoTaiKhoanModel.money" [options]="{ align: 'left', prefix: '', suffix: ' VND', precision: 0,
+            thousands: '.', allowNegative: false, min: '0', max: 10000000 }" placeholder="Tối thiểu là 100.000VND" />
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Mã OTP</mat-label>
+        <input matInput type="number" [(ngModel)]="taoTaiKhoanModel.otp">
+    </mat-form-field>
+</div>
+<div class="example-button-row">
+    <button mat-raised-button color="primary">Tạo tài khoản</button>
+    <button mat-raised-button color="warn">Hủy</button>
+</div>

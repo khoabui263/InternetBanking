@@ -1,0 +1,51 @@
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Khoa Banking</a>
+    <h3 style="color: white; padding-top: 10px;">Xin chào Khoa</h3>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a style="color: white;" class="nav-link" href="#">Đăng xuất</a>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <div class="list-group" style="margin-top: -5px;">
+                    <mat-accordion multi="false">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <img src="../../assets/icon/bank-account.png">
+                                    Quản lý khách hàng
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-action-row>
+                                <a [routerLink]="['/employees/home/create-account']" class="link">
+                                    <img src="../../assets/icon/list.png" class="text">
+                                    <p class="text">Tạo tài khoản khách hàng</p>
+                                </a>
+                            </mat-action-row>
+                            <mat-action-row>
+                                <a [routerLink]="['/employees/home/history-transfer']" class="link">
+                                    <img src="../../assets/icon/history-transfer.png" class="text">
+                                    <p class="text">Lịch sử giao dịch</p>
+                                </a>
+                            </mat-action-row>
+                            <mat-action-row>
+                                <a [routerLink]="['/employees/home/recharge']" class="link">
+                                    <img src="../../assets/icon/changePassword.png" class="text">
+                                    <p class="text">Nạp tiền vào tài khoản</p>
+                                </a>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <router-outlet></router-outlet>
+        </main>
+
+    </div>
+</div>

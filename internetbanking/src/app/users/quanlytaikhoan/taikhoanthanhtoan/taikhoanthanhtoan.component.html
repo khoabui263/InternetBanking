@@ -1,0 +1,34 @@
+<!-- <mat-tab-group mat-align-tabs="start">
+  <mat-tab label="Danh sách tên gợi nhớ"> -->
+    <mat-form-field class="example-half-width">
+      <mat-label>Tìm kiếm tài khoản</mat-label>
+      <input matInput type="text">
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="hoten">
+          <th mat-header-cell *matHeaderCellDef> Họ tên </th>
+          <td mat-cell *matCellDef="let element"> {{element.hoten}} </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+        <ng-container matColumnDef="sodienthoai">
+          <th mat-header-cell *matHeaderCellDef> Số điện thoại </th>
+          <td mat-cell *matCellDef="let element"> {{element.sodienthoai}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tenloainguoidung">
+          <th mat-header-cell *matHeaderCellDef> Tên chức vụ </th>
+          <td mat-cell *matCellDef="let element"> {{element.tenloainguoidung}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+  <!-- </mat-tab>
+  <mat-tab label="Đổi mật khẩu"> -->
+    
+  <!-- </mat-tab>
+</mat-tab-group> -->

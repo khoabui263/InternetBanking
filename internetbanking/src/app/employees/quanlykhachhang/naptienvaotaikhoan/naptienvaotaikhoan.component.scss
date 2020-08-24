@@ -1,0 +1,19 @@
+table {
+    width: 100%;
+}
+.example-half-width {
+width: 50%;
+margin-right: 30px;
+}
+.example-button-row button {
+margin-right: 8px;
+}
+
+mat-radio-button {
+    display: inline;
+}
+
+.example-button-row button {
+    display: table-cell;
+    margin-right: 8px;
+}

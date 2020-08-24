@@ -1,0 +1,21 @@
+<div class="form-group">
+    <mat-form-field class="example-half-width">
+        <mat-label>Tài khoản gợi nhớ</mat-label>
+        <input matInput type="text" [(ngModel)]="tenGoiNhoModel.account">
+    </mat-form-field>
+    <div class="example-button-row">
+        <button mat-raised-button color="primary">Kiểm tra tài khoản</button>
+    </div>
+    <mat-form-field class="example-half-width">
+        <mat-label>Họ tên người gợi nhớ</mat-label>
+        <input matInput type="text" [(ngModel)]="tenGoiNhoModel.fullName" readonly>
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Đặt tên người gợi nhớ</mat-label>
+        <input matInput type="text" [(ngModel)]="tenGoiNhoModel.nickName">
+    </mat-form-field>
+</div>
+<div class="example-button-row">
+    <button mat-raised-button color="primary">Lưu tên gợi nhớ</button>
+    <button mat-raised-button color="warn">Tìm kiếm tên khác</button>
+</div>
