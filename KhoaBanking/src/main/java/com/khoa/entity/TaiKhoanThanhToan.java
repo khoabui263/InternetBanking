@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "taikhoanthanhtoan")
 public class TaiKhoanThanhToan {
@@ -25,16 +27,24 @@ public class TaiKhoanThanhToan {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mataikhoandangnhap", insertable = false, updatable = false)
+//	@JsonIgnore
 	private TaiKhoanDangNhap taiKhoanDangNhap;
 
 	@OneToMany(mappedBy = "taikhoannguoigui", fetch = FetchType.LAZY)
+//	@JsonIgnore
 	private List<LichSuGiaoDich> giaodichdagui;
 	
 	@OneToMany(mappedBy = "taikhoannguoinhan", fetch = FetchType.LAZY)
+//	@JsonIgnore
 	private List<LichSuGiaoDich> giaodichdanhan;
 	
 	@OneToMany(mappedBy = "taikhoangoinho", fetch = FetchType.LAZY)
+//	@JsonIgnore
 	private List<GoiNho> goinho;
+	
+	public TaiKhoanThanhToan() {
+		
+	}
 
 	public long getMataikhoanthanhtoan() {
 		return mataikhoanthanhtoan;

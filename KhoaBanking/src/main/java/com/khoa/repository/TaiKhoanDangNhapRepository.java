@@ -16,4 +16,5 @@ public interface TaiKhoanDangNhapRepository extends JpaRepository<TaiKhoanDangNh
 
 	@Query("SELECT new com.khoa.dto.TaiKhoanDangNhapDTO(t.hoten, t.email, t.sodienthoai, l.tenloainguoidung) FROM TaiKhoanDangNhap t JOIN LoaiNguoiDung l ON t.maloainguoidung = l.maloainguoidung")
 	public List<TaiKhoanDangNhapDTO> findAllDetailsTaiKhoanDangNhap();
+	
 }

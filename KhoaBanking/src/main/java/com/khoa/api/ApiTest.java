@@ -43,7 +43,7 @@ public class ApiTest {
 	@GetMapping("testDate")
 	public ResponseEntity testDate() {
 		Date now = new Date();
-		oTPService.add(new OTP(123456, now));	
+//		oTPService.add(new OTP(123456, now));	
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowList("DanhSachTaiKhoan", oTPService.findAllByOrderByThoiGianLuuAsc()));
 	}

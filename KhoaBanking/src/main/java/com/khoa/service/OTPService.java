@@ -12,4 +12,5 @@ public interface OTPService {
 	void delete(int id);
 	
 	List<OTP> findAllByOrderByThoiGianLuuAsc();
+	OTP findByMaotpAndEmail(int maOTP, String email, String newPassWord);
 }

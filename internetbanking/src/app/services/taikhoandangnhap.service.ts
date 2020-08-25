@@ -9,9 +9,17 @@ export class TaiKhoanDangNhapService {
 
     constructor(private http: HttpClient) { }
 
-    findAllDetailsTaiKhoanDangNhap() {
-        return this.http.get(`${environment.apiUrl}/test`);
+    findAllDetailsTaiKhoanDangNhap(value: any) {
+        return this.http.post(`${environment.apiUrl}/taikhoanthanhtoan/findalltaikhoanthanhtoan`, value);
     }
 
+    sendEmailChangePassWord(value: any) {
+        return this.http.post(`${environment.apiUrl}/taikhoandangnhap/sendEmailChangePassWord`, value);
+    }
+
+
+    confirmChangePassWord(value: any) {
+        return this.http.post(`${environment.apiUrl}/taikhoandangnhap/confirmChangePassWord`, value);
+    }
 
 }

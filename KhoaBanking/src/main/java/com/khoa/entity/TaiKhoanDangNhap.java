@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "taikhoandangnhap")
 public class TaiKhoanDangNhap {
@@ -28,12 +30,15 @@ public class TaiKhoanDangNhap {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "maloainguoidung", insertable = false, updatable = false)
+	@JsonIgnore
 	private LoaiNguoiDung loaiNguoiDung;
 	
 	@OneToMany(mappedBy = "taiKhoanDangNhap", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<TaiKhoanThanhToan> taiKhoanThanhToans;
 	
 	@OneToMany(mappedBy = "taikhoancannho", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<GoiNho> taikhoangoinho;
 	
 	public TaiKhoanDangNhap() {

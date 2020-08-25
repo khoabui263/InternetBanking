@@ -16,6 +16,7 @@ import { DialogNoticeComponent } from './share/dialog-notice/dialog-notice.compo
 import { DialogErrorsComponent } from './share/dialog-errors/dialog-errors.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor.service';
+import { SearchService } from './services/search.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { InterceptorService } from './services/interceptor.service';
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
-    }
+    },
+    SearchService
   ],
   bootstrap: [AppComponent]
 })

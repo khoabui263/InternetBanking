@@ -1,18 +1,26 @@
 <div class="form-group">
     <mat-form-field class="example-half-width">
         <mat-label>Mật khẩu cũ</mat-label>
-        <input matInput type="password" [(ngModel)]="changePassModel.oldPassWord">
+        <input matInput type="password" [disabled]="confirmChangePwd" [(ngModel)]="changePassModel.oldPassWord">
     </mat-form-field>
     <mat-form-field class="example-half-width">
         <mat-label>Mật khẩu mới</mat-label>
-        <input matInput type="password" [(ngModel)]="changePassModel.newPassWord">
+        <input matInput type="password" [disabled]="confirmChangePwd" [(ngModel)]="changePassModel.newPassWord">
     </mat-form-field>
     <mat-form-field class="example-half-width">
         <mat-label>Xác nhận mật khẩu</mat-label>
-        <input matInput type="password" [(ngModel)]="changePassModel.confirmPassWord">
+        <input matInput type="password" [disabled]="confirmChangePwd" [(ngModel)]="changePassModel.confirmPassWord">
     </mat-form-field>
+    <div class="example-button-row">
+        <button mat-raised-button color="primary" [disabled]="confirmChangePwd" (click)="sendEmailConfirm()">Xác nhận đổi mật khẩu bằng email</button>
+    </div>
 </div>
-<div class="example-button-row">
-    <button mat-raised-button color="primary">Đổi mật khẩu</button>
-    <button mat-raised-button color="warn">Reset</button>
+
+<div class="confirm-change-pwd">
+    <mat-form-field class="example-half-width">
+        <mat-label>Nhập mã OTP</mat-label>
+        <input matInput type="text" [disabled]="!confirmChangePwd" [(ngModel)]="changePassModel.otp">
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!confirmChangePwd" (click)="confirmChangePassWord()">Đổi mật khẩu</button>
+    <button mat-raised-button color="warn" style="margin-left: 8px;" [disabled]="!confirmChangePwd" (click)=" reset()">Reset</button>
 </div>

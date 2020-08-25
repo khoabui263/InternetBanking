@@ -1,21 +1,34 @@
 package com.khoa.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.khoa.dto.TaiKhoanDangNhapDTO;
+import com.khoa.entity.OTP;
 import com.khoa.entity.TaiKhoanDangNhap;
+import com.khoa.repository.OTPRepository;
 import com.khoa.repository.TaiKhoanDangNhapRepository;
 import com.khoa.service.TaiKhoanDangNhapService;
+import com.khoa.util.EmailTypesConstant;
+import com.khoa.util.EmailUtil;
 
 @Service
 public class TaiKhoanDangNhapServiceImpl implements TaiKhoanDangNhapService {
 
 	@Autowired
 	private TaiKhoanDangNhapRepository taiKhoanDangNhapRepository;
+	
+	@Autowired
+	private OTPRepository oTPRepository;
+	
+	@Autowired
+	private EmailUtil emailUtil;
 
 	@Override
 	public List<TaiKhoanDangNhapDTO> findAll() {
@@ -69,6 +82,23 @@ public class TaiKhoanDangNhapServiceImpl implements TaiKhoanDangNhapService {
 	@Override
 	public List<TaiKhoanDangNhapDTO> findAllDetailsTaiKhoanDangNhap() {
 		return taiKhoanDangNhapRepository.findAllDetailsTaiKhoanDangNhap();
+	}
+
+	@Override
+	public TaiKhoanDangNhapDTO sendEmailChangePassWord(String email, String passWord) {
+		TaiKhoanDangNhap taiKhoanDangNhap = taiKhoanDangNhapRepository.findByEmailOrSodienthoai(email, email);
+		if(taiKhoanDangNhap != null) {
+			if(BCrypt.checkpw(passWord, taiKhoanDangNhap.getMatkhau())) {
+				Random rd = new Random();
+				int number = rd.nextInt((999999 - 100000) + 1) + 100000;
+				oTPRepository.save(new OTP(number, taiKhoanDangNhap.getEmail(), new Date()));
+				
+				emailUtil.transfer(number+"", taiKhoanDangNhap.getEmail(), EmailTypesConstant.CHANGE_PASSWORD);
+				return new TaiKhoanDangNhapDTO();
+			}
+		}
+		
+		return null;
 	}
 
 }

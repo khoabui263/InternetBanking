@@ -11,4 +11,6 @@ import com.khoa.entity.OTP;
 public interface OTPRepository extends JpaRepository<OTP, Integer> {
 
 	public List<OTP> findAllByOrderByThoigianluuAsc();
+	
+	public OTP findByMaotpAndEmail(int maOTP, String email);
 }

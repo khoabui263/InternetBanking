@@ -19,6 +19,7 @@ public class OTP {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int maotp;
+	private String email;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date thoigianluu;
@@ -26,10 +27,11 @@ public class OTP {
 	public OTP() {
 		
 	}
-
-	public OTP(int maotp, Date thoigianluu) {
+	
+	public OTP(int maotp, String email, Date thoigianluu) {
 		super();
 		this.maotp = maotp;
+		this.email = email;
 		this.thoigianluu = thoigianluu;
 	}
 
@@ -55,6 +57,14 @@ public class OTP {
 
 	public void setThoigianluu(Date thoigianluu) {
 		this.thoigianluu = thoigianluu;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	
