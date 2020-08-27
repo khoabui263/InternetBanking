@@ -26,6 +26,7 @@ public class LichSuGiaoDich {
 	private long mataikhoannguoinhan;
 	private String tennguoinhan;
 	private String sotiengiaodich;
+	private String noidungchuyenkhoan;
 	private int manganhanggui;
 	private int manganhangnhan;
 	
@@ -58,6 +59,28 @@ public class LichSuGiaoDich {
 	@JoinColumn(name = "maloaigiaodich", insertable = false, updatable = false)
 	private LoaiGiaoDich loaigiaodich;
 
+	public LichSuGiaoDich() {
+		
+	}
+
+	public LichSuGiaoDich(long mataikhoannguoigui, String tennguoigui, long mataikhoannguoinhan,
+			String tennguoinhan, String sotiengiaodich, String noidungchuyenkhoan, int manganhanggui,
+			int manganhangnhan, Date ngaygiaodich, String signature, int maloaigiaodich, int trangthai) {
+		super();
+		this.mataikhoannguoigui = mataikhoannguoigui;
+		this.tennguoigui = tennguoigui;
+		this.mataikhoannguoinhan = mataikhoannguoinhan;
+		this.tennguoinhan = tennguoinhan;
+		this.sotiengiaodich = sotiengiaodich;
+		this.noidungchuyenkhoan = noidungchuyenkhoan;
+		this.manganhanggui = manganhanggui;
+		this.manganhangnhan = manganhangnhan;
+		this.ngaygiaodich = ngaygiaodich;
+		this.signature = signature;
+		this.maloaigiaodich = maloaigiaodich;
+		this.trangthai = trangthai;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -82,14 +105,6 @@ public class LichSuGiaoDich {
 		this.tennguoigui = tennguoigui;
 	}
 
-	public String getTennguoinhan() {
-		return tennguoinhan;
-	}
-
-	public void setTennguoinhan(String tennguoinhan) {
-		this.tennguoinhan = tennguoinhan;
-	}
-
 	public long getMataikhoannguoinhan() {
 		return mataikhoannguoinhan;
 	}
@@ -98,12 +113,28 @@ public class LichSuGiaoDich {
 		this.mataikhoannguoinhan = mataikhoannguoinhan;
 	}
 
+	public String getTennguoinhan() {
+		return tennguoinhan;
+	}
+
+	public void setTennguoinhan(String tennguoinhan) {
+		this.tennguoinhan = tennguoinhan;
+	}
+
 	public String getSotiengiaodich() {
 		return sotiengiaodich;
 	}
 
 	public void setSotiengiaodich(String sotiengiaodich) {
 		this.sotiengiaodich = sotiengiaodich;
+	}
+
+	public String getNoidungchuyenkhoan() {
+		return noidungchuyenkhoan;
+	}
+
+	public void setNoidungchuyenkhoan(String noidungchuyenkhoan) {
+		this.noidungchuyenkhoan = noidungchuyenkhoan;
 	}
 
 	public int getManganhanggui() {
@@ -193,7 +224,5 @@ public class LichSuGiaoDich {
 	public void setLoaigiaodich(LoaiGiaoDich loaigiaodich) {
 		this.loaigiaodich = loaigiaodich;
 	}
-
-	
 	
 }

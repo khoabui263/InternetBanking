@@ -1,0 +1,17 @@
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h1 id="modal-title">Chuyển khoản thành công</h1>
+    </header>
+    <section id="modal-body">
+        <p>{{ message }}</p>
+        <mat-form-field class="example-half-width" *ngIf="saved">
+            <mat-label>Tên gợi nhớ</mat-label>
+            <input matInput type="text" [(ngModel)]="bietdanhgoinho">
+        </mat-form-field>
+        <p style="color: blue;" *ngIf="!saved">{{ ketQua }}</p>
+    </section>
+    <footer id="modal-footer">
+        <button mat-raised-button id="modal-cancel-button" (click)="saveReminder()" *ngIf="saved">Lưu lại</button>
+        <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Đóng</button>
+    </footer>
+</div>

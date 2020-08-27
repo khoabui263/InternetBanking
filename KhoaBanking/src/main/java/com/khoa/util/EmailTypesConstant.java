@@ -4,6 +4,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EmailTypesConstant {
-
 	public static final String CHANGE_PASSWORD = "Đổi mật khẩu";
+	public static final String TRANSFER = "Chuyển khoản";
 }

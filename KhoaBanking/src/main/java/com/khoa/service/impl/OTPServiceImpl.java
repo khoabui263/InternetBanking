@@ -7,10 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import com.khoa.dto.LichSuGiaoDichDTO;
+import com.khoa.entity.GoiNho;
+import com.khoa.entity.LichSuGiaoDich;
 import com.khoa.entity.OTP;
 import com.khoa.entity.TaiKhoanDangNhap;
+import com.khoa.entity.TaiKhoanThanhToan;
+import com.khoa.repository.GoiNhoRepository;
+import com.khoa.repository.LichSuGiaoDichRepository;
 import com.khoa.repository.OTPRepository;
 import com.khoa.repository.TaiKhoanDangNhapRepository;
+import com.khoa.repository.TaiKhoanThanhToanRepository;
 import com.khoa.service.OTPService;
 
 @Service
@@ -21,6 +28,15 @@ public class OTPServiceImpl implements OTPService {
 	
 	@Autowired
 	private TaiKhoanDangNhapRepository taiKhoanDangNhapRepository;
+	
+	@Autowired
+	private TaiKhoanThanhToanRepository taiKhoanThanhToanRepository;
+	
+	@Autowired
+	private LichSuGiaoDichRepository lichSuGiaoDichRepository;
+	
+	@Autowired
+	private GoiNhoRepository goiNhoRepository;
 
 	@Override
 	public List<OTP> findAll() {
@@ -84,6 +100,62 @@ public class OTPServiceImpl implements OTPService {
 		}
 		
 		return new OTP();
+	}
+
+	@Override
+	public GoiNho confirmTransfer(LichSuGiaoDichDTO lichSuGiaoDichDTO) {
+		OTP otp = oTPRepository.findByMaotpAndEmail(lichSuGiaoDichDTO.getOtp(), lichSuGiaoDichDTO.getEmail());
+		Date now = new Date();
+		if(otp == null || now.getTime() < otp.getThoigianluu().getTime() || now.getTime() > (otp.getThoigianluu().getTime() + 3600000)) {
+			return null;
+		}
+		oTPRepository.delete(otp);
+		
+		TaiKhoanThanhToan taiKhoanGui = taiKhoanThanhToanRepository.findFirstByMataikhoanthanhtoan(lichSuGiaoDichDTO.getMataikhoannguoigui());
+		TaiKhoanThanhToan taiKhoanNhan = taiKhoanThanhToanRepository.findFirstByMataikhoanthanhtoan(lichSuGiaoDichDTO.getMataikhoannguoinhan());
+		long soDuNguoiGui = Long.parseLong(taiKhoanGui.getSodu());
+		long soDuNguoiNhan = Long.parseLong(taiKhoanNhan.getSodu());
+		long soTienGiaoDich = Long.parseLong(lichSuGiaoDichDTO.getSotiengiaodich());
+		
+		if(lichSuGiaoDichDTO.getNguoitraphi() == 0) {
+			soDuNguoiGui = soDuNguoiGui - soTienGiaoDich;
+			soDuNguoiNhan = soDuNguoiNhan + soTienGiaoDich - 5000;
+			
+		} else if(lichSuGiaoDichDTO.getNguoitraphi() == 1) {
+			soDuNguoiGui = soDuNguoiGui - soTienGiaoDich - 5000;
+			soDuNguoiNhan = soDuNguoiNhan + soTienGiaoDich;
+		}
+		
+		taiKhoanGui.setSodu(soDuNguoiGui+"");
+		taiKhoanNhan.setSodu(soDuNguoiNhan+"");
+		TaiKhoanThanhToan taiKhoanGuiSauGiaoDich = taiKhoanThanhToanRepository.save(taiKhoanGui);
+		TaiKhoanThanhToan taiKhoanNhanSauGiaoDich = taiKhoanThanhToanRepository.save(taiKhoanNhan);
+		
+		if(taiKhoanGuiSauGiaoDich == null || taiKhoanNhanSauGiaoDich == null) {
+			return null;
+		}
+		
+		LichSuGiaoDich lichSuGiaoDich = lichSuGiaoDichRepository.save(new LichSuGiaoDich(lichSuGiaoDichDTO.getMataikhoannguoigui(), 
+																						lichSuGiaoDichDTO.getTennguoigui(),
+																						lichSuGiaoDichDTO.getMataikhoannguoinhan(),
+																						lichSuGiaoDichDTO.getTennguoinhan(),
+																						lichSuGiaoDichDTO.getSotiengiaodich(),
+																						lichSuGiaoDichDTO.getNoidungchuyenkhoan(),
+																						lichSuGiaoDichDTO.getManganhanggui(),
+																						lichSuGiaoDichDTO.getManganhangnhan(),
+																						new Date(),
+																						null,
+																						1,
+																						1));
+		if(lichSuGiaoDich == null) {
+			return null;
+		}
+		
+		GoiNho goiNho = goiNhoRepository.findFirstByMataikhoancannhoAndMataikhoangoinho(lichSuGiaoDichDTO.getMataikhoancannho(), lichSuGiaoDichDTO.getMataikhoannguoinhan());
+		if(goiNho == null) {
+			return new GoiNho(0,lichSuGiaoDichDTO.getMataikhoancannho(), lichSuGiaoDichDTO.getMataikhoannguoinhan(), lichSuGiaoDichDTO.getMataikhoannguoinhan()+"", lichSuGiaoDichDTO.getTennguoinhan(), "", lichSuGiaoDichDTO.getManganhangnhan());
+		}
+		return new GoiNho(0);
 	}
 
 }

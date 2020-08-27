@@ -38,7 +38,7 @@ public class ApiTaiKhoanDangNhap {
 			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Không tìm thấy tài khoản"));
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Tìm thấy tài khoản"));
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Gửi mail thành công"));
 	}
 	
 	@PostMapping("confirmChangePassWord")
@@ -51,6 +51,15 @@ public class ApiTaiKhoanDangNhap {
 		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Cập nhật mật khẩu thành công"));
 	}
 	
+	@PostMapping("sendEmailChuyenTien")
+	public ResponseEntity sendEmailChuyenTien(@RequestBody TaiKhoanDangNhapDTO taiKhoanDangNhapDTO) {
+		TaiKhoanDangNhapDTO danhSachTaiKhoanThanhToan = taiKhoanDangNhapService.sendEmailChuyenTien(taiKhoanDangNhapDTO.getEmail());
+		if(danhSachTaiKhoanThanhToan == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Gửi mail thất bại"));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Gửi mail thành công"));
+	}
 	
 
 }

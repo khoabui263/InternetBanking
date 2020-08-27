@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.khoa.entity.GoiNho;
+
 @Component
 public class ResultMessage {
 	public HashMap<String, String> ShowResult(String i, String mess) {
@@ -18,6 +20,13 @@ public class ResultMessage {
 	public HashMap<String, Object> ShowList(String string, List list) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put(string, list);
+
+		return map;
+	}
+	
+	public HashMap<String, GoiNho> ShowReminder(String i, GoiNho goiNho) {
+		HashMap<String, GoiNho> map = new HashMap<>();
+		map.put(i, goiNho);
 
 		return map;
 	}

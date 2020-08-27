@@ -14,4 +14,5 @@ public interface TaiKhoanDangNhapService {
 	TaiKhoanDangNhapDTO findByEmailOrSodienthoai(String email, String soDienThoai);
 	List<TaiKhoanDangNhapDTO> findAllDetailsTaiKhoanDangNhap();
 	TaiKhoanDangNhapDTO sendEmailChangePassWord(String email, String passWord);
+	TaiKhoanDangNhapDTO sendEmailChuyenTien(String email);
 }

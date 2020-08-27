@@ -3,14 +3,20 @@
         <div class="form-group">
             <mat-form-field class="example-half-width">
                 <mat-label>Nhập thông tin</mat-label>
-                <input matInput placeholder="Số tài khoản thanh toán hoặc tên gợi nhớ" type="text"
-                    [(ngModel)]="chuyenKhoanModel.accountReceiver">
+                <input matInput placeholder="Số tài khoản hoặc tên gợi nhớ" type="text"
+                    (input)="search($event.target.value)" [value]="chuyenKhoanModel.accountReceiver">
             </mat-form-field>
+            <ul *ngIf="Show" class="search-result">
+                <li *ngFor="let item of list$ | async" [value]="item.mataikhoangoinho"
+                    (click)="fill(item.mataikhoangoinho)">
+                    {{ item.bietdanhgoinho }} - {{ item.mataikhoangoinho }} - {{ item.hotennguoigoinho }}
+                </li>
+            </ul>
             <mat-form-field>
                 <mat-label>Chọn ngân hàng</mat-label>
                 <mat-select [(ngModel)]="selectedBank">
-                    <mat-option *ngFor="let bank of banks" [value]="bank.value">
-                        {{bank.viewValue}}
+                    <mat-option *ngFor="let bank of banks" [value]="bank.manganhang">
+                        {{bank.tennganhang}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -23,13 +29,13 @@
         <div class="form-group row">
             <mat-form-field class="example-half-width">
                 <mat-label>Tên người nhận</mat-label>
-                <input matInput type="text" [(ngModel)]="chuyenKhoanModel.fullName" readonly>
+                <input matInput type="text" [(ngModel)]="chuyenKhoanModel.hoTenNguoiNhan" readonly>
             </mat-form-field>
             <mat-form-field class="example-half-width">
                 <mat-label>Chọn tài khoản trích tiền</mat-label>
-                <mat-select [(ngModel)]="selectedBank">
-                    <mat-option *ngFor="let bank of banks" [value]="bank.value">
-                        {{bank.viewValue}}
+                <mat-select [(ngModel)]="chuyenKhoanModel.accountTransfer">
+                    <mat-option *ngFor="let item of danhSachTaiKhoanChuyen" [value]="item.mataikhoanthanhtoan">
+                        {{item.mataikhoanthanhtoan}}: {{item.sodu | currency:'VND':'symbol'}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -52,22 +58,22 @@
                 </mat-radio-button>
             </mat-radio-group>
         </div>
-        <mat-spinner [diameter]="30" *ngIf="showSpinner"></mat-spinner>
         <div class="example-button-row">
             <button mat-raised-button color="primary" (click)="finish2()">Xác nhận thông tin</button>
             <button mat-raised-button color="warn" (click)="reset()">Quay lại từ đầu</button>
+            <mat-spinner style="margin-top: 10px;" [diameter]="50" *ngIf="showSpinner"></mat-spinner>
         </div>
     </mat-step>
     <mat-step label="Xác nhận chuyển khoản">
-        <div class="notice">
+        <!-- <div class="notice">
             <span>* Kiểm tra email của bạn để nhập mã OTP! Chọn nút xác nhận lại nếu bạn chưa nhận được mail</span>
         </div>
         <div class="example-button-row">
             <button mat-raised-button color="primary" (click)="finish2()">Xác nhận lại</button>
-        </div><br />
+        </div><br /> -->
         <mat-form-field class="example-half-width">
             <mat-label>Mã OTP</mat-label>
-            <input matInput type="text" [(ngModel)]="chuyenKhoanModel.OTP">
+            <input matInput type="number" [(ngModel)]="chuyenKhoanModel.OTP">
         </mat-form-field>
         <div class="example-button-row">
             <button mat-raised-button color="primary" (click)="finish3()">Xác nhận chuyển khoản</button>

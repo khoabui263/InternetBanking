@@ -62,14 +62,8 @@ export class TaikhoanthanhtoanComponent implements OnInit {
     this.getAccount();
     this.dataSource.paginator = this.paginator;
     this.list$ = this.searchTerms.pipe(
-      // đợi 300ms sau khi gõ phím xong mới chạy
-      debounceTime(300),
-
-      // Nếu ko có thay đổi từ mới thì dừng lại
+      debounceTime(500),
       distinctUntilChanged(),
-
-      // Sau khi vượt qua 2 dk trên thực hiện việc lấy dữ liệu
-      // switchMap, fliatMap, concatMap phải trả về kiểu dữ liệu Observable
       switchMap((term: string) => this.searchService.searchTaiKhoanThanhToan(term))
 
     );
@@ -113,7 +107,7 @@ export class TaikhoanthanhtoanComponent implements OnInit {
   fill(name: string) {
     this.maTaikhoan = name;
     this.Show = false;
-    // this.searchTerms.next(null);
+    this.searchTerms.next(null);
     this.dataSource.data = this.searchResult;
 
   }

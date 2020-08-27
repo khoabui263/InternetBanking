@@ -16,48 +16,37 @@ public class GoiNho {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private int mataikhoancannho;
 	private long mataikhoangoinho;
 	private String chuoimanguoigoinho;
 	private String hotennguoigoinho;
 	private String bietdanhgoinho;
 	private int manganhang;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mataikhoancannho", insertable = false, updatable = false)
 	private TaiKhoanDangNhap taikhoancannho;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mataikhoangoinho", insertable = false, updatable = false)
 	private TaiKhoanThanhToan taikhoangoinho;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manganhang", insertable = false, updatable = false)
 	private NganHang nganhanggoinho;
-	
+
 	public GoiNho() {
-		
+
 	}
 
-	public GoiNho(int id, int mataikhoancannho, long mataikhoangoinho, String hotennguoigoinho, String bietdanhgoinho,
-			int manganhang, TaiKhoanDangNhap taikhoancannho, TaiKhoanThanhToan taikhoangoinho,
-			NganHang nganhanggoinho) {
+	public GoiNho(int mataikhoancannho) {
 		super();
-		this.id = id;
 		this.mataikhoancannho = mataikhoancannho;
-		this.mataikhoangoinho = mataikhoangoinho;
-		this.hotennguoigoinho = hotennguoigoinho;
-		this.bietdanhgoinho = bietdanhgoinho;
-		this.manganhang = manganhang;
-		this.taikhoancannho = taikhoancannho;
-		this.taikhoangoinho = taikhoangoinho;
-		this.nganhanggoinho = nganhanggoinho;
 	}
 
-	public GoiNho(int id, int mataikhoancannho, long mataikhoangoinho, String chuoimanguoigoinho,
-			String hotennguoigoinho, String bietdanhgoinho, int manganhang, TaiKhoanDangNhap taikhoancannho,
-			TaiKhoanThanhToan taikhoangoinho, NganHang nganhanggoinho) {
+	public GoiNho(int id, int mataikhoancannho, long mataikhoangoinho, String chuoimanguoigoinho, String hotennguoigoinho,
+			String bietdanhgoinho, int manganhang) {
 		super();
 		this.id = id;
 		this.mataikhoancannho = mataikhoancannho;
@@ -66,9 +55,6 @@ public class GoiNho {
 		this.hotennguoigoinho = hotennguoigoinho;
 		this.bietdanhgoinho = bietdanhgoinho;
 		this.manganhang = manganhang;
-		this.taikhoancannho = taikhoancannho;
-		this.taikhoangoinho = taikhoangoinho;
-		this.nganhanggoinho = nganhanggoinho;
 	}
 
 	public int getId() {

@@ -2,6 +2,8 @@ package com.khoa.service;
 
 import java.util.List;
 
+import com.khoa.dto.LichSuGiaoDichDTO;
+import com.khoa.entity.GoiNho;
 import com.khoa.entity.OTP;
 
 public interface OTPService {
@@ -13,4 +15,5 @@ public interface OTPService {
 	
 	List<OTP> findAllByOrderByThoiGianLuuAsc();
 	OTP findByMaotpAndEmail(int maOTP, String email, String newPassWord);
+	GoiNho confirmTransfer(LichSuGiaoDichDTO lichSuGiaoDichDTO);
 }

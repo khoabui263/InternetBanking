@@ -17,6 +17,7 @@ import { DialogErrorsComponent } from './share/dialog-errors/dialog-errors.compo
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor.service';
 import { SearchService } from './services/search.service';
+import { DialogReminderComponent } from './users/dialogs/dialog-reminder/dialog-reminder.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SearchService } from './services/search.service';
     NotFoundComponent,
     DialogNoticeComponent,
     DialogErrorsComponent,
+    DialogReminderComponent
 
   ],
   imports: [
@@ -41,6 +43,7 @@ import { SearchService } from './services/search.service';
   entryComponents: [
     DialogNoticeComponent,
     DialogErrorsComponent,
+    DialogReminderComponent
 
   ],
   providers: [

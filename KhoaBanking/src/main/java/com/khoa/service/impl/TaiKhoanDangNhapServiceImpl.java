@@ -101,4 +101,14 @@ public class TaiKhoanDangNhapServiceImpl implements TaiKhoanDangNhapService {
 		return null;
 	}
 
+	@Override
+	public TaiKhoanDangNhapDTO sendEmailChuyenTien(String email) {
+		Random rd = new Random();
+		int number = rd.nextInt((999999 - 100000) + 1) + 100000;
+		oTPRepository.save(new OTP(number, email, new Date()));
+		
+		emailUtil.transfer(number+"", email, EmailTypesConstant.TRANSFER);
+		return new TaiKhoanDangNhapDTO();
+	}
+
 }

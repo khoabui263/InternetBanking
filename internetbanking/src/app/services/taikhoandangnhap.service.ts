@@ -22,4 +22,8 @@ export class TaiKhoanDangNhapService {
         return this.http.post(`${environment.apiUrl}/taikhoandangnhap/confirmChangePassWord`, value);
     }
 
+    sendEmailChuyenTien(value: any) {
+        return this.http.post(`${environment.apiUrl}/taikhoandangnhap/sendEmailChuyenTien`, value);
+    }
+
 }
