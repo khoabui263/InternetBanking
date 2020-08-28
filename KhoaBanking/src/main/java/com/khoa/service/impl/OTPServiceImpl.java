@@ -86,6 +86,7 @@ public class OTPServiceImpl implements OTPService {
 //		System.out.println(diffMinutes);
 		
 		if(otp == null || now.getTime() < otp.getThoigianluu().getTime() || now.getTime() > (otp.getThoigianluu().getTime() + 3600000)) {
+			oTPRepository.delete(otp);
 			return null;
 		}
 		
@@ -107,6 +108,7 @@ public class OTPServiceImpl implements OTPService {
 		OTP otp = oTPRepository.findByMaotpAndEmail(lichSuGiaoDichDTO.getOtp(), lichSuGiaoDichDTO.getEmail());
 		Date now = new Date();
 		if(otp == null || now.getTime() < otp.getThoigianluu().getTime() || now.getTime() > (otp.getThoigianluu().getTime() + 3600000)) {
+			oTPRepository.delete(otp);
 			return null;
 		}
 		oTPRepository.delete(otp);
@@ -153,7 +155,7 @@ public class OTPServiceImpl implements OTPService {
 		
 		GoiNho goiNho = goiNhoRepository.findFirstByMataikhoancannhoAndMataikhoangoinho(lichSuGiaoDichDTO.getMataikhoancannho(), lichSuGiaoDichDTO.getMataikhoannguoinhan());
 		if(goiNho == null) {
-			return new GoiNho(0,lichSuGiaoDichDTO.getMataikhoancannho(), lichSuGiaoDichDTO.getMataikhoannguoinhan(), lichSuGiaoDichDTO.getMataikhoannguoinhan()+"", lichSuGiaoDichDTO.getTennguoinhan(), "", lichSuGiaoDichDTO.getManganhangnhan());
+			return new GoiNho(0,lichSuGiaoDichDTO.getMataikhoancannho(), lichSuGiaoDichDTO.getMataikhoannguoinhan(), lichSuGiaoDichDTO.getMataikhoannguoinhan()+"", lichSuGiaoDichDTO.getTennguoinhan(), "", lichSuGiaoDichDTO.getManganhangnhan(),1);
 		}
 		return new GoiNho(0);
 	}

@@ -198,7 +198,7 @@ export class ChuyenkhoanComponent implements OnInit {
             disableClose: true,
             height: '300px',
             width: '300px',
-            data: { message: 'Chuyển khoản thất bại' }
+            data: { message: 'Chuyển khoản thất bại vì nhập mã OTP sai hoặc hết hiệu lực' }
           });
           fail.afterClosed().subscribe(() => {
             this.reset();
@@ -225,7 +225,8 @@ export class ChuyenkhoanComponent implements OnInit {
               mataikhoangoinho: res.mataikhoangoinho,
               chuoimanguoigoinho: res.chuoimanguoigoinho,
               hotennguoigoinho: res.hotennguoigoinho,
-              manganhang: res.manganhang
+              manganhang: res.manganhang,
+              trangthai: res.trangthai
             }
           });
           success.afterClosed().subscribe(() => {

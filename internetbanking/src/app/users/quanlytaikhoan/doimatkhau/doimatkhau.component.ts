@@ -13,6 +13,7 @@ import { DialogNoticeComponent } from 'src/app/share/dialog-notice/dialog-notice
   styleUrls: ['./doimatkhau.component.scss']
 })
 export class DoimatkhauComponent implements OnInit {
+  showSpinner = false;
   confirmChangePwd = false;
   public changePassModel: any = {
     oldPassWord: '',
@@ -49,6 +50,7 @@ export class DoimatkhauComponent implements OnInit {
       return;
 
     }
+    this.showSpinner = !this.showSpinner;
     const decodeAT = jwt_decode(this.webStorageSerivce.getLocalStorage('token-info').accessToken);
     const value = {
       email: decodeAT.sub,
@@ -57,6 +59,7 @@ export class DoimatkhauComponent implements OnInit {
 
     this.taiKhoanDangNhapService.sendEmailChangePassWord(value).subscribe((res: any) => {
       console.log(res);
+      this.showSpinner = !this.showSpinner;
       if (res.active === '1') {
         this.showErorrDialog('Sai mật khẩu. Vui lòng nhập lại');
       }
@@ -84,7 +87,7 @@ export class DoimatkhauComponent implements OnInit {
 
     this.taiKhoanDangNhapService.confirmChangePassWord(value).subscribe((res: any) => {
       if (res.active === '1') {
-        this.showErorrDialog('Cập nhật mật khẩu thất bại');
+        this.showErorrDialog('Cập nhật mật khẩu thất bại. Vui lòng nhập mã OTP đúng và còn hiệu lực');
 
       } else if (res.active === '0') {
         // this.showErorrDialog('Cập nhật mật khẩu thành công');

@@ -1,0 +1,13 @@
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h1 id="modal-title">Xóa tên gợi nhớ</h1>
+    </header>
+    <section id="modal-body">
+        <p>Bạn có muốn xóa tên gợi nhớ này không ?</p>
+        <p style="color: blue;" *ngIf="!saved">{{ ketQua }}</p>
+    </section>
+    <footer id="modal-footer">
+        <button mat-raised-button id="modal-cancel-button" (click)="deleteReminder()" *ngIf="saved">Đồng ý</button>
+        <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Đóng</button>
+    </footer>
+</div>

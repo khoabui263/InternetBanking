@@ -12,4 +12,8 @@ public interface GoiNhoService {
 	void update(GoiNho dto);
 	void delete(int id);
 	List<GoiNhoDTO> searchGoiNho(int maTaiKhoanCanNho, String chuoimanguoigoinho, int maNganHang);
+	List<GoiNhoDTO> findByMataikhoancannhoAndTrangthai(int mataikhoancannho, int trangthai);
+	GoiNho activateGoiNho(int mataikhoancannho, long mataikhoangoinho, int manganhang);
+	String findGoiNhoExisted(int mataikhoancannho, long mataikhoangoinho, int manganhang);
+	GoiNho deleteReminder(int id);
 }

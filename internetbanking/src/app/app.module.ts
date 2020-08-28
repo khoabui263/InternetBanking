@@ -18,6 +18,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor.service';
 import { SearchService } from './services/search.service';
 import { DialogReminderComponent } from './users/dialogs/dialog-reminder/dialog-reminder.component';
+import { DialogActivegoinhoComponent } from './users/dialogs/dialog-activegoinho/dialog-activegoinho.component';
+import { DialogUpdategoinhoComponent } from './users/dialogs/dialog-updategoinho/dialog-updategoinho.component';
+import { DialogDeletegoinhoComponent } from './users/dialogs/dialog-deletegoinho/dialog-deletegoinho.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { DialogReminderComponent } from './users/dialogs/dialog-reminder/dialog-
     NotFoundComponent,
     DialogNoticeComponent,
     DialogErrorsComponent,
-    DialogReminderComponent
+    DialogReminderComponent,
+    DialogActivegoinhoComponent,
+    DialogUpdategoinhoComponent,
+    DialogDeletegoinhoComponent,
 
   ],
   imports: [
@@ -43,7 +49,10 @@ import { DialogReminderComponent } from './users/dialogs/dialog-reminder/dialog-
   entryComponents: [
     DialogNoticeComponent,
     DialogErrorsComponent,
-    DialogReminderComponent
+    DialogReminderComponent,
+    DialogActivegoinhoComponent,
+    DialogUpdategoinhoComponent,
+    DialogDeletegoinhoComponent,
 
   ],
   providers: [

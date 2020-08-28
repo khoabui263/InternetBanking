@@ -23,6 +23,18 @@ public class GoiNhoDTO {
 		this.hotennguoigoinho = hotennguoigoinho;
 		this.bietdanhgoinho = bietdanhgoinho;
 	}
+	
+	public GoiNhoDTO(int id, int mataikhoancannho, long mataikhoangoinho, String chuoimanguoigoinho,
+			String hotennguoigoinho, String bietdanhgoinho, int manganhang) {
+		super();
+		this.id = id;
+		this.mataikhoancannho = mataikhoancannho;
+		this.mataikhoangoinho = mataikhoangoinho;
+		this.chuoimanguoigoinho = chuoimanguoigoinho;
+		this.hotennguoigoinho = hotennguoigoinho;
+		this.bietdanhgoinho = bietdanhgoinho;
+		this.manganhang = manganhang;
+	}
 
 	public int getId() {
 		return id;

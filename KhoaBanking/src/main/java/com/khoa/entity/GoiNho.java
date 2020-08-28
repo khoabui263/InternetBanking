@@ -23,6 +23,7 @@ public class GoiNho {
 	private String hotennguoigoinho;
 	private String bietdanhgoinho;
 	private int manganhang;
+	private int trangthai;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mataikhoancannho", insertable = false, updatable = false)
@@ -46,7 +47,7 @@ public class GoiNho {
 	}
 
 	public GoiNho(int id, int mataikhoancannho, long mataikhoangoinho, String chuoimanguoigoinho, String hotennguoigoinho,
-			String bietdanhgoinho, int manganhang) {
+			String bietdanhgoinho, int manganhang, int trangthai) {
 		super();
 		this.id = id;
 		this.mataikhoancannho = mataikhoancannho;
@@ -55,6 +56,7 @@ public class GoiNho {
 		this.hotennguoigoinho = hotennguoigoinho;
 		this.bietdanhgoinho = bietdanhgoinho;
 		this.manganhang = manganhang;
+		this.trangthai = trangthai;
 	}
 
 	public int getId() {
@@ -113,6 +115,14 @@ public class GoiNho {
 		this.manganhang = manganhang;
 	}
 
+	public int getTrangthai() {
+		return trangthai;
+	}
+
+	public void setTrangthai(int trangthai) {
+		this.trangthai = trangthai;
+	}
+
 	public TaiKhoanDangNhap getTaikhoancannho() {
 		return taikhoancannho;
 	}
@@ -136,5 +146,4 @@ public class GoiNho {
 	public void setNganhanggoinho(NganHang nganhanggoinho) {
 		this.nganhanggoinho = nganhanggoinho;
 	}
-
 }

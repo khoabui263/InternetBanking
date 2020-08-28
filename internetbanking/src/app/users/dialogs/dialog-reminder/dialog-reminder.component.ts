@@ -18,6 +18,7 @@ export class DialogReminderComponent implements OnInit {
   hotennguoigoinho: any;
   bietdanhgoinho: string;
   manganhang: any;
+  trangthai: any;
 
   constructor(
     private goinhoService: GoinhoService,
@@ -31,6 +32,8 @@ export class DialogReminderComponent implements OnInit {
     this.chuoimanguoigoinho = this.data.chuoimanguoigoinho;
     this.hotennguoigoinho = this.data.hotennguoigoinho;
     this.manganhang = this.data.manganhang;
+    this.trangthai = this.data.trangthai;
+    console.log(this.data.trangthai);
   }
 
   saveReminder() {
@@ -40,9 +43,11 @@ export class DialogReminderComponent implements OnInit {
       chuoimanguoigoinho: this.chuoimanguoigoinho,
       hotennguoigoinho: this.hotennguoigoinho,
       bietdanhgoinho: this.bietdanhgoinho,
-      manganhang: this.manganhang
-    }
+      manganhang: this.manganhang,
+      trangthai: 1
+    };
 
+    console.log(value);
     this.goinhoService.saveReminder(value).subscribe((res: any) => {
       console.log(res);
       if(res.active === '1') {

@@ -13,11 +13,11 @@ import com.khoa.entity.GoiNho;
 public interface GoiNhoRepository extends JpaRepository<GoiNho, Integer> {
 
 	public GoiNho findFirstByMataikhoancannhoAndMataikhoangoinho(int mataikhoancannho, long mataikhoangoinho);
+	
+	public GoiNho findFirstByMataikhoancannhoAndMataikhoangoinhoAndManganhang(int mataikhoancannho, long mataikhoangoinho, int manganhang);
 
-//	public List<GoiNho> findByChuoimanguoigoinhoContainingOrHotennguoigoinhoContainingOrBietdanhgoinhoContaining(
-//			String chuoimanguoigoinho, String hotennguoigoinho, String bietdanhgoinho);
-
-	@Query("FROM GoiNho g WHERE g.mataikhoancannho = :mataikhoancannho AND g.manganhang= :manganhang AND (g.chuoimanguoigoinho LIKE CONCAT('%',:chuoigoinho,'%') OR g.hotennguoigoinho LIKE CONCAT('%',:chuoigoinho,'%') OR g.bietdanhgoinho LIKE CONCAT('%',:chuoigoinho,'%'))")
+	@Query("FROM GoiNho g WHERE g.mataikhoancannho = :mataikhoancannho AND g.manganhang= :manganhang AND g.trangthai = 1 AND (g.chuoimanguoigoinho LIKE CONCAT('%',:chuoigoinho,'%') OR g.hotennguoigoinho LIKE CONCAT('%',:chuoigoinho,'%') OR g.bietdanhgoinho LIKE CONCAT('%',:chuoigoinho,'%'))")
 	public List<GoiNho> searchGoiNho(@Param("mataikhoancannho") int mataikhoancannho, @Param("manganhang") int manganhang, @Param("chuoigoinho") String chuoigoinho);
 
+	public List<GoiNho> findByMataikhoancannhoAndTrangthai(int mataikhoancannho, int trangthai);
 }

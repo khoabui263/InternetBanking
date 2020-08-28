@@ -12,4 +12,20 @@ export class GoinhoService {
   saveReminder(value: any) {
     return this.http.post(`${environment.apiUrl}/goinho/saveReminder`, value);
   }
+
+  findByMataikhoancannhoAndTrangthai(value: any) {
+    return this.http.post(`${environment.apiUrl}/goinho/findByMataikhoancannhoAndTrangthai`, value);
+  }
+
+  findGoiNhoExisted(value: any) {
+    return this.http.post(`${environment.apiUrl}/goinho/findGoiNhoExisted`, value);
+  }
+
+  activateGoiNho(value: any) {
+    return this.http.put(`${environment.apiUrl}/goinho/activateGoiNho`, value);
+  }
+
+  deleteReminder(value: any) {
+    return this.http.put(`${environment.apiUrl}/goinho/deleteReminder`, value);
+  }
 }

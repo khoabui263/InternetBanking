@@ -14,6 +14,7 @@
     <div class="example-button-row">
         <button mat-raised-button color="primary" [disabled]="confirmChangePwd" (click)="sendEmailConfirm()">Xác nhận đổi mật khẩu bằng email</button>
     </div>
+    <mat-spinner style="margin-top: 10px;" [diameter]="50" *ngIf="showSpinner"></mat-spinner>
 </div>
 
 <div class="confirm-change-pwd">
