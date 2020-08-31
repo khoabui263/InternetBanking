@@ -17,7 +17,6 @@ import { DanhsachnhacnoComponent } from './quanlynhacno/danhsachnhacno/danhsachn
 import { TaotengoinhoComponent } from './quanlytengoinho/taotengoinho/taotengoinho.component';
 import { DanhsachtengoinhoComponent } from './quanlytengoinho/danhsachtengoinho/danhsachtengoinho.component';
 
-
 @NgModule({
   declarations: [
     UsersComponent,

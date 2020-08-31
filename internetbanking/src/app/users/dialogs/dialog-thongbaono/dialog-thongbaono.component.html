@@ -1,13 +1,12 @@
 <div id="modal-content-wrapper">
     <header id="modal-header">
-        <h2 id="modal-title">Đã lưu tên gợi nhớ</h2>
+        <h1 id="modal-title">Thông báo nợ</h1>
     </header>
     <section id="modal-body">
         <p>{{ message }}</p>
-        <p style="color: blue;" *ngIf="!saved">{{ ketQua }}</p>
     </section>
     <footer id="modal-footer">
-        <button mat-raised-button id="modal-cancel-button" (click)="activate()" *ngIf="saved">Kích hoạt</button>
+        <button mat-raised-button id="modal-primany-button" (click)="chuyenTrang()">Chuyển trang</button>
         <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Đóng</button>
     </footer>
 </div>

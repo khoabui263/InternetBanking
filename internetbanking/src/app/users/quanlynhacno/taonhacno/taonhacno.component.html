@@ -1,11 +1,15 @@
 <div class="form-group">
     <mat-form-field class="example-half-width">
-        <mat-label>Tài khoản nhắc nợ</mat-label>
-        <input matInput type="text" [(ngModel)]="nhacNoModel.debtReminder">
+        <mat-label>Thông tin người nợ</mat-label>
+        <input matInput type="text" placeholder="Nhập Email hoặc số điện thoại người nợ" [(ngModel)]="nhacNoModel.debtReminded">
     </mat-form-field>
     <mat-form-field class="example-half-width">
-        <mat-label>Tài khoản được nhắc nợ</mat-label>
-        <input matInput type="text" [(ngModel)]="nhacNoModel.debtReminded">
+        <mat-label>Tài khoản nhận trả nợ</mat-label>
+        <mat-select [(ngModel)]="nhacNoModel.accountReceiveDebt">
+            <mat-option *ngFor="let item of danhSachTaiKhoanNhanNo" [value]="item.mataikhoanthanhtoan">
+                {{item.mataikhoanthanhtoan}}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
     <mat-form-field class="example-half-width">
         <mat-label>Số tiền nợ</mat-label>
@@ -13,12 +17,12 @@
             thousands: '.', allowNegative: false, min: '0', max: 500000000 }" />
     </mat-form-field>
     <mat-form-field class="example-half-width">
-        <mat-label>Nội dung chuyển khoản</mat-label>
+        <mat-label>Nội dung báo nợ</mat-label>
         <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
             cdkAutosizeMaxRows="5" [(ngModel)]="nhacNoModel.content"></textarea>
     </mat-form-field>
 </div>
 <div class="example-button-row">
-    <button mat-raised-button color="primary">Tạo nhắc nợ</button>
+    <button mat-raised-button color="primary" (click)="saveDebt()">Tạo nhắc nợ</button>
     <button mat-raised-button color="warn">Tạo nhắc nợ khác</button>
 </div>

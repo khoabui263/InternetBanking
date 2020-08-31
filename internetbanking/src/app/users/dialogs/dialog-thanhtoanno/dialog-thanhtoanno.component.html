@@ -1,0 +1,19 @@
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h2 id="modal-title">Thanh toán nợ</h2>
+    </header>
+    <section id="modal-body">
+        <p>Chọn tài khoản thanh toán nợ</p>
+        <mat-select [(ngModel)]="selectedAccount" placeholder="Mã số tài khoản - Số tiền">
+            <mat-option *ngFor="let item of danhSachTaiKhoanThanhToan" [value]="item.mataikhoanthanhtoan">
+                {{item.mataikhoanthanhtoan}}: {{item.sodu | currency:'VND':'symbol'}}
+            </mat-option>
+        </mat-select>
+        <p *ngIf="!Error" style="color: red;">{{ loi }}</p>
+        <p *ngIf="!Result" style="color: dodgerblue;">{{ ketQua }}</p>
+    </section>
+    <footer id="modal-footer">
+        <button mat-raised-button id="modal-cancel-button" (click)="saveDebt()" *ngIf="saved">Thanh toán nợ</button>
+        <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Đóng</button>
+    </footer>
+</div>

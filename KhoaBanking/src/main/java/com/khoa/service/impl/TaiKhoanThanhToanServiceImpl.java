@@ -56,7 +56,7 @@ public class TaiKhoanThanhToanServiceImpl implements TaiKhoanThanhToanService {
 	public List<TaiKhoanThanhToanDTO> findByMataikhoandangnhap(int mataikhoandangnhap) {
 		List<TaiKhoanThanhToanDTO> dto = new ArrayList<TaiKhoanThanhToanDTO>();
 		
-		List<TaiKhoanThanhToan> list = taiKhoanThanhToanRepository.findByMataikhoandangnhap(mataikhoandangnhap);
+		List<TaiKhoanThanhToan> list = taiKhoanThanhToanRepository.findByMataikhoandangnhapAndTrangthai(mataikhoandangnhap, 1);
 		for (TaiKhoanThanhToan taiKhoanThanhToan : list) {
 			dto.add(new TaiKhoanThanhToanDTO(taiKhoanThanhToan.getMataikhoanthanhtoan(), 
 											taiKhoanThanhToan.getMataikhoandangnhap(), 
@@ -73,7 +73,7 @@ public class TaiKhoanThanhToanServiceImpl implements TaiKhoanThanhToanService {
 	public List<TaiKhoanThanhToanDTO> findByMataikhoanthanhtoan(long mataikhoanthanhtoan) {
 		List<TaiKhoanThanhToanDTO> dto = new ArrayList<TaiKhoanThanhToanDTO>();
 		
-		List<TaiKhoanThanhToan> list =  taiKhoanThanhToanRepository.findByMataikhoanthanhtoan(mataikhoanthanhtoan);
+		List<TaiKhoanThanhToan> list =  taiKhoanThanhToanRepository.findByMataikhoanthanhtoanAndTrangthai(mataikhoanthanhtoan, 1);
 		for (TaiKhoanThanhToan taiKhoanThanhToan : list) {
 			dto.add(new TaiKhoanThanhToanDTO(taiKhoanThanhToan.getMataikhoanthanhtoan(), 
 											taiKhoanThanhToan.getMataikhoandangnhap(), 
@@ -90,13 +90,13 @@ public class TaiKhoanThanhToanServiceImpl implements TaiKhoanThanhToanService {
 	public FindTaiKhoanGuiVaNhanDTO findTaiKhoanGuiVaNhan(TaiKhoanThanhToanDTO taiKhoanThanhToanDTO) {
 		TaiKhoanThanhToan taiKhoanNhan = new TaiKhoanThanhToan();
 		try {
-			taiKhoanNhan = taiKhoanThanhToanRepository.findByMataikhoanthanhtoan(taiKhoanThanhToanDTO.getMataikhoanthanhtoan()).get(0);
+			taiKhoanNhan = taiKhoanThanhToanRepository.findByMataikhoanthanhtoanAndTrangthai(taiKhoanThanhToanDTO.getMataikhoanthanhtoan(), 1).get(0);
 		} catch (Exception e) {
 			return new FindTaiKhoanGuiVaNhanDTO("1", null);
 		}
 		
 		List<TaiKhoanThanhToanDTO> danhSachGuiDTO = new ArrayList<TaiKhoanThanhToanDTO>();
-		List<TaiKhoanThanhToan> danhSachTaiKhoanGui = taiKhoanThanhToanRepository.findByMataikhoandangnhap(taiKhoanThanhToanDTO.getMataikhoandangnhap());
+		List<TaiKhoanThanhToan> danhSachTaiKhoanGui = taiKhoanThanhToanRepository.findByMataikhoandangnhapAndTrangthai(taiKhoanThanhToanDTO.getMataikhoandangnhap(), 1);
 		for (TaiKhoanThanhToan taiKhoanThanhToan : danhSachTaiKhoanGui) {
 			if(taiKhoanThanhToan.getMataikhoanthanhtoan() == taiKhoanThanhToanDTO.getMataikhoanthanhtoan()) {
 				return new FindTaiKhoanGuiVaNhanDTO("2", null);

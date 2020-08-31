@@ -21,6 +21,9 @@ import { DialogReminderComponent } from './users/dialogs/dialog-reminder/dialog-
 import { DialogActivegoinhoComponent } from './users/dialogs/dialog-activegoinho/dialog-activegoinho.component';
 import { DialogUpdategoinhoComponent } from './users/dialogs/dialog-updategoinho/dialog-updategoinho.component';
 import { DialogDeletegoinhoComponent } from './users/dialogs/dialog-deletegoinho/dialog-deletegoinho.component';
+import { DialogUpdatenhacnoComponent } from './users/dialogs/dialog-updatenhacno/dialog-updatenhacno.component';
+import { DialogThanhtoannoComponent } from './users/dialogs/dialog-thanhtoanno/dialog-thanhtoanno.component';
+import { DialogThongbaonoComponent } from './users/dialogs/dialog-thongbaono/dialog-thongbaono.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { DialogDeletegoinhoComponent } from './users/dialogs/dialog-deletegoinho
     DialogActivegoinhoComponent,
     DialogUpdategoinhoComponent,
     DialogDeletegoinhoComponent,
+    DialogUpdatenhacnoComponent,
+    DialogThanhtoannoComponent,
+    DialogThongbaonoComponent,
 
   ],
   imports: [
@@ -53,6 +59,9 @@ import { DialogDeletegoinhoComponent } from './users/dialogs/dialog-deletegoinho
     DialogActivegoinhoComponent,
     DialogUpdategoinhoComponent,
     DialogDeletegoinhoComponent,
+    DialogUpdatenhacnoComponent,
+    DialogThanhtoannoComponent,
+    DialogThongbaonoComponent,
 
   ],
   providers: [

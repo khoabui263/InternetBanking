@@ -133,7 +133,7 @@ export class ChuyenkhoanComponent implements OnInit {
     }
 
     if (this.chuyenKhoanModel.money < 10000) {
-      this.showErorrDialog('Số tiền gửi phải lớn hơn 10.000 VND');
+      this.showErorrDialog('Số tiền gửi tối thiểu là 10.000 VND');
       return;
 
     } else {

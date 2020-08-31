@@ -1,49 +1,206 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
-
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];
+import { Component, OnInit, ViewChild, QueryList, ViewChildren, AfterViewInit, OnDestroy } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { WebStorageSerivce } from 'src/app/services/webstorage.service';
+import { NhacnoService } from 'src/app/services/nhacno.service';
+import * as jwt_decode from 'jwt-decode';
+import { DialogUpdatenhacnoComponent } from '../../dialogs/dialog-updatenhacno/dialog-updatenhacno.component';
+import { DialogThanhtoannoComponent } from '../../dialogs/dialog-thanhtoanno/dialog-thanhtoanno.component';
 
 @Component({
   selector: 'app-danhsachnhacno',
   templateUrl: './danhsachnhacno.component.html',
   styleUrls: ['./danhsachnhacno.component.scss']
 })
-export class DanhsachnhacnoComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+export class DanhsachnhacnoComponent implements OnInit, AfterViewInit, OnDestroy {
+  EventSource: any;
+  SoluongTaoNo: number;
+  SoluongChuaThanhToan: number;
+  SoluongTuChoiThanhToan: number;
+
+  displayedColumnsTaoNo: string[] = ['hotennguoibinoTaoNo', 'sotiennoTaoNo', 'noidungnhacnoTaoNo', 'chinhsuaTaoNo'];
+  displayedColumnsChuaThanhToan: string[] = ['hotennguoinhacnoChuaThanhToan', 'sotiennoChuaThanhToan',
+    'noidungnhacnoChuaThanhToan', 'chinhsuaChuaThanhToan'];
+  displayedColumnsTuChoiThanhToan: string[] = ['hotennguoinhacnoTuChoiThanhToan', 'sotiennoTuChoiThanhToan',
+    'noidungnhacnoTuChoiThanhToan', 'chinhsuaTuChoiThanhToan'];
+
+  dataSourceTaoNo = new MatTableDataSource();
+  dataSourceChuaThanhToan = new MatTableDataSource();
+  dataSourceTuChoiThanhToan = new MatTableDataSource();
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.getDanhSachNo();
+    this.nhacNoRealTime();
+  }
+
+  ngAfterViewInit() {
+    this.dataSourceTaoNo.paginator = this.paginator.toArray()[0];
+    this.dataSourceChuaThanhToan.paginator = this.paginator.toArray()[1];
+    this.dataSourceTuChoiThanhToan.paginator = this.paginator.toArray()[2];
+  }
+
+  constructor(
+    private webStorageSerivce: WebStorageSerivce,
+    private nhacNoService: NhacnoService,
+    private matDialog: MatDialog
+  ) { }
+
+  ngOnDestroy(): void {
+    if(this.EventSource){
+      this.EventSource.close();
+    }
+  }
+
+  getDanhSachNo() {
+    const decodeAT = jwt_decode(this.webStorageSerivce.getLocalStorage('token-info').accessToken);
+    const value = {
+      manguoinhacno: decodeAT.mataikhoan
+    };
+
+    this.nhacNoService.getDanhSachNo(value).subscribe((res: any) => {
+      console.log(res);
+      this.dataSourceTaoNo.data = res.danhSachTaoNo;
+      this.dataSourceChuaThanhToan.data = res.danhSachChuaThanhToanNo;
+      this.dataSourceTuChoiThanhToan.data = res.danhSachTuChoiThanhToan;
+      this.SoluongTaoNo = res.danhSachTaoNo.length;
+      this.SoluongChuaThanhToan = res.danhSachChuaThanhToanNo.length;
+      this.SoluongTuChoiThanhToan = res.danhSachTuChoiThanhToan.length;
+    });
+  }
+
+  nhacNoRealTime() {
+    const decodeAT = jwt_decode(this.webStorageSerivce.getLocalStorage('token-info').accessToken);
+    this.EventSource = new EventSource('http://localhost:8080/api/realtime/getDanhSachNo/' + decodeAT.mataikhoan);
+    this.EventSource.addEventListener('message', message => {
+      const danhSachNo = JSON.parse(message.data);
+      console.log(danhSachNo);
+      this.dataSourceTaoNo.data = danhSachNo.danhSachTaoNo;
+      this.dataSourceChuaThanhToan.data = danhSachNo.danhSachChuaThanhToanNo;
+      this.dataSourceTuChoiThanhToan.data = danhSachNo.danhSachTuChoiThanhToan;
+      this.SoluongTaoNo = danhSachNo.danhSachTaoNo.length;
+      this.SoluongChuaThanhToan = danhSachNo.danhSachChuaThanhToanNo.length;
+      this.SoluongTuChoiThanhToan = danhSachNo.danhSachTuChoiThanhToan.length;
+    });
+  }
+
+  update(ma: number, nhacno, bino, status: number) {
+    const decodeAT = jwt_decode(this.webStorageSerivce.getLocalStorage('token-info').accessToken);
+    if (status === 4) {
+      const success = this.matDialog.open(DialogUpdatenhacnoComponent, {
+        disableClose: true,
+        height: '300px',
+        width: '500px',
+        data: {
+          message: 'Bạn có muốn hủy nhắc nợ này không ?',
+          id: ma,
+          manguoinhacno: nhacno,
+          manguoibino: bino,
+          maloainhacno: status
+        }
+      });
+
+      success.afterClosed().subscribe((res) => {
+        console.log(res);
+        if (res.active === 0) {
+          console.log('closed');
+        } else {
+          this.dataSourceTaoNo.data = res.danhSachTaoNo;
+          this.dataSourceChuaThanhToan.data = res.danhSachChuaThanhToanNo;
+          this.dataSourceTuChoiThanhToan.data = res.danhSachTuChoiThanhToan;
+          this.SoluongTaoNo = res.danhSachTaoNo.length;
+          this.SoluongChuaThanhToan = res.danhSachChuaThanhToanNo.length;
+          this.SoluongTuChoiThanhToan = res.danhSachTuChoiThanhToan.length;
+        }
+      });
+
+    } else if (status === 3) {
+      const success = this.matDialog.open(DialogUpdatenhacnoComponent, {
+        disableClose: true,
+        height: '300px',
+        width: '500px',
+        data: {
+          message: 'Bạn chắc chắn không muốn trả phần nhắc nợ này ?',
+          id: ma,
+          manguoinhacno: nhacno,
+          manguoibino: bino,
+          maloainhacno: status
+        }
+      });
+
+      success.afterClosed().subscribe((res) => {
+        console.log(res);
+        if (res.active === 0) {
+          console.log('closed');
+        } else {
+          this.dataSourceTaoNo.data = res.danhSachTaoNo;
+          this.dataSourceChuaThanhToan.data = res.danhSachChuaThanhToanNo;
+          this.dataSourceTuChoiThanhToan.data = res.danhSachTuChoiThanhToan;
+          this.SoluongTaoNo = res.danhSachTaoNo.length;
+          this.SoluongChuaThanhToan = res.danhSachChuaThanhToanNo.length;
+          this.SoluongTuChoiThanhToan = res.danhSachTuChoiThanhToan.length;
+        }
+      });
+
+    } else if (status === 1) {
+      const success = this.matDialog.open(DialogUpdatenhacnoComponent, {
+        disableClose: true,
+        height: '300px',
+        width: '500px',
+        data: {
+          message: 'Bạn có muốn tiếp tục nhắc nợ không ?',
+          id: ma,
+          manguoinhacno: nhacno,
+          manguoibino: bino,
+          maloainhacno: status
+        }
+      });
+
+      success.afterClosed().subscribe((res) => {
+        console.log(res);
+        if (res.active === 0) {
+          console.log('closed');
+        } else {
+          this.dataSourceTaoNo.data = res.danhSachTaoNo;
+          this.dataSourceChuaThanhToan.data = res.danhSachChuaThanhToanNo;
+          this.dataSourceTuChoiThanhToan.data = res.danhSachTuChoiThanhToan;
+          this.SoluongTaoNo = res.danhSachTaoNo.length;
+          this.SoluongChuaThanhToan = res.danhSachChuaThanhToanNo.length;
+          this.SoluongTuChoiThanhToan = res.danhSachTuChoiThanhToan.length;
+        }
+      });
+    }
+  }
+
+  payDebt(ma: number, nguoiNhacNo, nguoiBiNo, taiKhoanNhacNo, hoTenNhacNo, hoTenBiNo, soTien, noiDung) {
+    const success = this.matDialog.open(DialogThanhtoannoComponent, {
+      disableClose: true,
+      height: '300px',
+      width: '500px',
+      data: {
+        id: ma,
+        manguoinhacno: nguoiNhacNo,
+        manguoibino: nguoiBiNo,
+        mataikhoannhacno: taiKhoanNhacNo,
+        hotennguoinhacno: hoTenNhacNo,
+        hotennguoibino: hoTenBiNo,
+        sotienno: soTien,
+        noidungnhacno: noiDung
+      }
+    });
+
+    success.afterClosed().subscribe((res) => {
+      console.log(res);
+      if (res.active === 0) {
+        console.log('closed');
+      } else {
+        this.dataSourceTaoNo.data = res.danhSachTaoNo;
+        this.dataSourceChuaThanhToan.data = res.danhSachChuaThanhToanNo;
+        this.dataSourceTuChoiThanhToan.data = res.danhSachTuChoiThanhToan;
+        this.SoluongTaoNo = res.danhSachTaoNo.length;
+        this.SoluongChuaThanhToan = res.danhSachChuaThanhToanNo.length;
+        this.SoluongTuChoiThanhToan = res.danhSachTuChoiThanhToan.length;
+      }
+    });
   }
 
 }

@@ -42,6 +42,14 @@ public class TaiKhoanThanhToan {
 //	@JsonIgnore
 	private List<GoiNho> goinho;
 	
+	@OneToMany(mappedBy = "taikhoannhacno", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<NhacNo> nguoinhacno;
+	
+	@OneToMany(mappedBy = "taikhoanduocnhacno", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<NhacNo> nguoibino;
+	
 	public TaiKhoanThanhToan() {
 		
 	}

@@ -13,6 +13,8 @@ import com.khoa.entity.TaiKhoanDangNhap;
 public interface TaiKhoanDangNhapRepository extends JpaRepository<TaiKhoanDangNhap, Integer> {
 
 	public TaiKhoanDangNhap findByEmailOrSodienthoai(String email, String soDienThoai);
+	
+	public TaiKhoanDangNhap findByMataikhoanAndTrangthai(int mataikhoan, int trangthai);
 
 	@Query("SELECT new com.khoa.dto.TaiKhoanDangNhapDTO(t.hoten, t.email, t.sodienthoai, l.tenloainguoidung) FROM TaiKhoanDangNhap t JOIN LoaiNguoiDung l ON t.maloainguoidung = l.maloainguoidung")
 	public List<TaiKhoanDangNhapDTO> findAllDetailsTaiKhoanDangNhap();

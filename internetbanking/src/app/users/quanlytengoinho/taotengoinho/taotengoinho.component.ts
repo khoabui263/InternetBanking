@@ -44,7 +44,8 @@ export class TaotengoinhoComponent implements OnInit {
 
   findGoiNhoExisted() {
     if (!this.tenGoiNhoModel.account) {
-      this.showErorrDialog('Vui lòng điền tài khoàn gợi nhớ')
+      this.showErorrDialog('Vui lòng điền tài khoàn gợi nhớ');
+      return;
     }
 
     if (this.selectedBank === 1) {

@@ -19,9 +19,9 @@ public interface TaiKhoanThanhToanRepository extends JpaRepository<TaiKhoanThanh
 //	@Query("SELECT new com.khoa.dto.TaiKhoanThanhToanDTO(t.mataikhoanthanhtoan, t.mataikhoandangnhap, t.sodu, t.trangthai) FROM TaiKhoanThanhToan t WHERE t.mataikhoanthanhtoan= :mataikhoanthanhtoan")
 //	public List<TaiKhoanThanhToanDTO> findByMataikhoanthanhtoan(@Param("mataikhoanthanhtoan") long mataikhoanthanhtoan);
 	
-	public List<TaiKhoanThanhToan> findByMataikhoandangnhap(int mataikhoandangnhap);
+	public List<TaiKhoanThanhToan> findByMataikhoandangnhapAndTrangthai(int mataikhoandangnhap, int trangthai);
 	
-	public List<TaiKhoanThanhToan> findByMataikhoanthanhtoan(long mataikhoanthanhtoan);
+	public List<TaiKhoanThanhToan> findByMataikhoanthanhtoanAndTrangthai(long mataikhoanthanhtoan, int trangthai);
 	
 	public TaiKhoanThanhToan findFirstByMataikhoanthanhtoan(long mataikhoanthanhtoan);
 	

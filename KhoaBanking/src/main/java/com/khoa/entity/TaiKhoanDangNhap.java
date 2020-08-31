@@ -41,6 +41,14 @@ public class TaiKhoanDangNhap {
 	@JsonIgnore
 	private List<GoiNho> taikhoangoinho;
 	
+	@OneToMany(mappedBy = "thongtinnguoinhacno", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<NhacNo> nguoinhacno;
+	
+	@OneToMany(mappedBy = "thongtinnguoibino", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<NhacNo> nguoibino;
+	
 	public TaiKhoanDangNhap() {
 		
 	}
@@ -161,6 +169,27 @@ public class TaiKhoanDangNhap {
 		this.taiKhoanThanhToans = taiKhoanThanhToans;
 	}
 
-	
-	
+	public List<GoiNho> getTaikhoangoinho() {
+		return taikhoangoinho;
+	}
+
+	public void setTaikhoangoinho(List<GoiNho> taikhoangoinho) {
+		this.taikhoangoinho = taikhoangoinho;
+	}
+
+	public List<NhacNo> getNguoinhacno() {
+		return nguoinhacno;
+	}
+
+	public void setNguoinhacno(List<NhacNo> nguoinhacno) {
+		this.nguoinhacno = nguoinhacno;
+	}
+
+	public List<NhacNo> getNguoibino() {
+		return nguoibino;
+	}
+
+	public void setNguoibino(List<NhacNo> nguoibino) {
+		this.nguoibino = nguoibino;
+	}
 }
