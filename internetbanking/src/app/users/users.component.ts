@@ -28,13 +28,12 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getName();
-    this.nhacNoRealTime();
+    // this.nhacNoRealTime();
   }
 
   logOut() {
     this.webStorageSerivce.clearLocalStorage();
     this.router.navigateByUrl('/');
-    this.EventSource.close();
   }
 
   getName() {

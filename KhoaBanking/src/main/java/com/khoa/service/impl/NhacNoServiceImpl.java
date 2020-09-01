@@ -182,8 +182,10 @@ public class NhacNoServiceImpl implements NhacNoService {
 			return null;
 		}
 
-		LichSuGiaoDich lichSuGiaoDich = new LichSuGiaoDich(nhacNoDTO.getMataikhoanduocnhacno(),
+		LichSuGiaoDich lichSuGiaoDich = new LichSuGiaoDich(nhacNoDTO.getManguoibino(),
+															nhacNoDTO.getMataikhoanduocnhacno(),
 															nhacNoDTO.getHotennguoibino(),
+															nhacNoDTO.getManguoinhacno(),
 															nhacNoDTO.getMataikhoannhacno(),
 															nhacNoDTO.getHotennguoinhacno(),
 															nhacNoDTO.getSotienno(),

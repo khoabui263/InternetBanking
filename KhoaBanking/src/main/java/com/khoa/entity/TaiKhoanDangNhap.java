@@ -33,6 +33,14 @@ public class TaiKhoanDangNhap {
 	@JsonIgnore
 	private LoaiNguoiDung loaiNguoiDung;
 	
+	@OneToMany(mappedBy = "thongtinnguoigui", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<LichSuGiaoDich> nguoigui;
+	
+	@OneToMany(mappedBy = "thongtinnguoinhan", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<LichSuGiaoDich> nguoinhan;
+	
 	@OneToMany(mappedBy = "taiKhoanDangNhap", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<TaiKhoanThanhToan> taiKhoanThanhToans;
@@ -191,5 +199,21 @@ public class TaiKhoanDangNhap {
 
 	public void setNguoibino(List<NhacNo> nguoibino) {
 		this.nguoibino = nguoibino;
+	}
+
+	public List<LichSuGiaoDich> getNguoigui() {
+		return nguoigui;
+	}
+
+	public void setNguoigui(List<LichSuGiaoDich> nguoigui) {
+		this.nguoigui = nguoigui;
+	}
+
+	public List<LichSuGiaoDich> getNguoinhan() {
+		return nguoinhan;
+	}
+
+	public void setNguoinhan(List<LichSuGiaoDich> nguoinhan) {
+		this.nguoinhan = nguoinhan;
 	}
 }

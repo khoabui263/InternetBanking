@@ -137,8 +137,10 @@ public class OTPServiceImpl implements OTPService {
 			return null;
 		}
 		
-		LichSuGiaoDich lichSuGiaoDich = lichSuGiaoDichRepository.save(new LichSuGiaoDich(lichSuGiaoDichDTO.getMataikhoannguoigui(), 
+		LichSuGiaoDich lichSuGiaoDich = lichSuGiaoDichRepository.save(new LichSuGiaoDich(taiKhoanGuiSauGiaoDich.getMataikhoandangnhap(),
+																						lichSuGiaoDichDTO.getMataikhoannguoigui(), 
 																						lichSuGiaoDichDTO.getTennguoigui(),
+																						taiKhoanNhanSauGiaoDich.getMataikhoandangnhap(),
 																						lichSuGiaoDichDTO.getMataikhoannguoinhan(),
 																						lichSuGiaoDichDTO.getTennguoinhan(),
 																						lichSuGiaoDichDTO.getSotiengiaodich(),

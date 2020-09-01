@@ -21,8 +21,10 @@ public class LichSuGiaoDich {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private int manguoigui;
 	private long mataikhoannguoigui;
 	private String tennguoigui;
+	private int manguoinhan;
 	private long mataikhoannguoinhan;
 	private String tennguoinhan;
 	private String sotiengiaodich;
@@ -38,6 +40,14 @@ public class LichSuGiaoDich {
 	
 	@Column(columnDefinition="int default 1")
 	private int trangthai;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "manguoigui", insertable = false, updatable = false)
+	private TaiKhoanDangNhap thongtinnguoigui;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "manguoinhan", insertable = false, updatable = false)
+	private TaiKhoanDangNhap thongtinnguoinhan;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mataikhoannguoigui", insertable = false, updatable = false)
@@ -69,6 +79,28 @@ public class LichSuGiaoDich {
 		super();
 		this.mataikhoannguoigui = mataikhoannguoigui;
 		this.tennguoigui = tennguoigui;
+		this.mataikhoannguoinhan = mataikhoannguoinhan;
+		this.tennguoinhan = tennguoinhan;
+		this.sotiengiaodich = sotiengiaodich;
+		this.noidungchuyenkhoan = noidungchuyenkhoan;
+		this.manganhanggui = manganhanggui;
+		this.manganhangnhan = manganhangnhan;
+		this.ngaygiaodich = ngaygiaodich;
+		this.signature = signature;
+		this.maloaigiaodich = maloaigiaodich;
+		this.trangthai = trangthai;
+	}
+	
+	public LichSuGiaoDich(int manguoigui, long mataikhoannguoigui, String tennguoigui, int manguoinhan,
+			long mataikhoannguoinhan, String tennguoinhan, String sotiengiaodich, String noidungchuyenkhoan,
+			int manganhanggui, int manganhangnhan, Date ngaygiaodich, String signature, int maloaigiaodich,
+			int trangthai) {
+		super();
+		this.id = id;
+		this.manguoigui = manguoigui;
+		this.mataikhoannguoigui = mataikhoannguoigui;
+		this.tennguoigui = tennguoigui;
+		this.manguoinhan = manguoinhan;
 		this.mataikhoannguoinhan = mataikhoannguoinhan;
 		this.tennguoinhan = tennguoinhan;
 		this.sotiengiaodich = sotiengiaodich;
@@ -223,6 +255,38 @@ public class LichSuGiaoDich {
 
 	public void setLoaigiaodich(LoaiGiaoDich loaigiaodich) {
 		this.loaigiaodich = loaigiaodich;
+	}
+
+	public int getManguoigui() {
+		return manguoigui;
+	}
+
+	public void setManguoigui(int manguoigui) {
+		this.manguoigui = manguoigui;
+	}
+
+	public int getManguoinhan() {
+		return manguoinhan;
+	}
+
+	public void setManguoinhan(int manguoinhan) {
+		this.manguoinhan = manguoinhan;
+	}
+
+	public TaiKhoanDangNhap getThongtinnguoigui() {
+		return thongtinnguoigui;
+	}
+
+	public void setThongtinnguoigui(TaiKhoanDangNhap thongtinnguoigui) {
+		this.thongtinnguoigui = thongtinnguoigui;
+	}
+
+	public TaiKhoanDangNhap getThongtinnguoinhan() {
+		return thongtinnguoinhan;
+	}
+
+	public void setThongtinnguoinhan(TaiKhoanDangNhap thongtinnguoinhan) {
+		this.thongtinnguoinhan = thongtinnguoinhan;
 	}
 	
 }
