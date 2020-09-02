@@ -9,11 +9,43 @@ margin-right: 30px;
 margin-right: 8px;
 }
 
-.mat-column-taikhoannguoigui {
+.mat-column-mataikhoannguoinhan {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 15% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-mataikhoannguoigui {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 15% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.mat-column-tennguoinhan {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
-    width: 10% !important;
+    width: 20% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
   
@@ -25,11 +57,11 @@ margin-right: 8px;
     hyphens: auto;
   }
 
-  .mat-column-taikhoannguoinhan {
+  .mat-column-tennguoigui {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
-    width: 10% !important;
+    width: 20% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
   
@@ -41,11 +73,11 @@ margin-right: 8px;
     hyphens: auto;
   }
 
-  .mat-column-sotien {
+  .mat-column-sotiengiaodich {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
-    width: 5% !important;
+    width: 15% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
   
@@ -57,11 +89,11 @@ margin-right: 8px;
     hyphens: auto;
   }
 
-  .mat-column-manganhanggui {
+  .mat-column-noidungchuyenkhoan {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
-    width: 10% !important;
+    width: 30% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
   
@@ -73,44 +105,11 @@ margin-right: 8px;
     hyphens: auto;
   }
 
-  .mat-column-manganhangnhan {
+  .mat-column-ngaygiaodich {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
-    width: 10% !important;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-  
-    word-break: break-word;
-  
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-  }
-
-  
-  .mat-column-ngayGiaoDich {
-    word-wrap: break-word !important;
-    white-space: unset !important;
-    flex: 0 0 10% !important;
-    width: 10% !important;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-  
-    word-break: break-word;
-  
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-  }
-
-.mat-column-signature {
-    word-wrap: break-word !important;
-    white-space: unset !important;
-    flex: 0 0 10% !important;
-    width: 10% !important;
+    width: 20% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
   

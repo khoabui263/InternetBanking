@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "lichsugiaodich")
 public class LichSuGiaoDich {
@@ -43,30 +45,37 @@ public class LichSuGiaoDich {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manguoigui", insertable = false, updatable = false)
+	@JsonIgnore 
 	private TaiKhoanDangNhap thongtinnguoigui;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manguoinhan", insertable = false, updatable = false)
+	@JsonIgnore 
 	private TaiKhoanDangNhap thongtinnguoinhan;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mataikhoannguoigui", insertable = false, updatable = false)
+	@JsonIgnore 
 	private TaiKhoanThanhToan taikhoannguoigui;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mataikhoannguoinhan", insertable = false, updatable = false)
+	@JsonIgnore 
 	private TaiKhoanThanhToan taikhoannguoinhan;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manganhanggui", insertable = false, updatable = false)
+	@JsonIgnore 
 	private NganHang nganhanggui;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manganhangnhan", insertable = false, updatable = false)
+	@JsonIgnore 
 	private NganHang nganhangnhan;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "maloaigiaodich", insertable = false, updatable = false)
+	@JsonIgnore 
 	private LoaiGiaoDich loaigiaodich;
 
 	public LichSuGiaoDich() {
