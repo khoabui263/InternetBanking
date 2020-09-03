@@ -30,7 +30,7 @@ export class DanhsachnhacnoComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit() {
     this.getDanhSachNo();
-    // this.nhacNoRealTime();
+    this.nhacNoRealTime();
   }
 
   ngAfterViewInit() {

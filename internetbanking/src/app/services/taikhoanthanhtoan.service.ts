@@ -17,4 +17,8 @@ export class TaikhoanthanhtoanService {
     return this.http.post(`${environment.apiUrl}/taikhoanthanhtoan/confirmTransfer`, value);
   }
 
+  chargeMoney(value: any) {
+    return this.http.post(`${environment.apiUrl}/taikhoanthanhtoan/chargeMoney`, value);
+  }
+
 }

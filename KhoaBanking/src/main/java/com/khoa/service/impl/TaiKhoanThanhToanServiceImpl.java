@@ -1,14 +1,18 @@
 package com.khoa.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.khoa.dto.FindTaiKhoanGuiVaNhanDTO;
+import com.khoa.dto.NapTienDTO;
 import com.khoa.dto.TaiKhoanThanhToanDTO;
+import com.khoa.entity.LichSuGiaoDich;
 import com.khoa.entity.TaiKhoanThanhToan;
+import com.khoa.repository.LichSuGiaoDichRepository;
 import com.khoa.repository.TaiKhoanDangNhapRepository;
 import com.khoa.repository.TaiKhoanThanhToanRepository;
 import com.khoa.service.TaiKhoanThanhToanService;
@@ -21,6 +25,9 @@ public class TaiKhoanThanhToanServiceImpl implements TaiKhoanThanhToanService {
 	
 	@Autowired
 	private TaiKhoanDangNhapRepository taiKhoanDangNhapRepository;
+	
+	@Autowired
+	private LichSuGiaoDichRepository lichSuGiaoDichRepository;
 
 	@Override
 	public List<TaiKhoanThanhToan> findAll() {
@@ -112,6 +119,69 @@ public class TaiKhoanThanhToanServiceImpl implements TaiKhoanThanhToanService {
 											taiKhoanNhan.getTaiKhoanDangNhap().getHoten(), danhSachGuiDTO);
 		
 		return dto;
+	}
+
+	@Override
+	public int chargeMoney(NapTienDTO napTienDTO) {
+		TaiKhoanThanhToan taiKhoanNguoiNhan = taiKhoanThanhToanRepository.findFirstByMataikhoanthanhtoanAndTrangthai(napTienDTO.getMataikhoannhan(), 1);
+		if(taiKhoanNguoiNhan == null) {
+			return 1;
+		}
+		
+		long soDuNguoiNhan = Long.parseLong(taiKhoanNguoiNhan.getSodu());
+		long soTienGiaoDich = Long.parseLong(napTienDTO.getMoney());
+		
+		if(napTienDTO.getType() == 0) {
+			TaiKhoanThanhToan taiKhoanNguoiGui = taiKhoanThanhToanRepository.findFirstByMataikhoanthanhtoanAndTrangthai(napTienDTO.getMataikhoanchuyen(), 1);
+			if(taiKhoanNguoiGui == null) {
+				return 1;
+			}
+			long soDuNguoiGui = Long.parseLong(taiKhoanNguoiGui.getSodu());
+			
+			if(soDuNguoiGui + 5000 < soTienGiaoDich) {
+				return 2;
+			}			
+			// Người gửi trả phí
+			soDuNguoiGui = soDuNguoiGui - soTienGiaoDich - 5000;
+			soDuNguoiNhan = soDuNguoiNhan + soTienGiaoDich;
+			
+			taiKhoanNguoiGui.setSodu(soDuNguoiGui+"");
+			taiKhoanNguoiNhan.setSodu(soDuNguoiNhan+"");
+			TaiKhoanThanhToan taiKhoanGuiSauGiaoDich = taiKhoanThanhToanRepository.save(taiKhoanNguoiGui);
+			TaiKhoanThanhToan taiKhoanNhanSauGiaoDich = taiKhoanThanhToanRepository.save(taiKhoanNguoiNhan);
+			
+			if(taiKhoanGuiSauGiaoDich == null || taiKhoanNhanSauGiaoDich == null) {
+				return 3;
+			}
+			
+			LichSuGiaoDich lichSuGiaoDich = lichSuGiaoDichRepository.save(new LichSuGiaoDich(taiKhoanGuiSauGiaoDich.getMataikhoandangnhap(),
+																							taiKhoanGuiSauGiaoDich.getMataikhoanthanhtoan(),
+																							taiKhoanGuiSauGiaoDich.getTaiKhoanDangNhap().getHoten(),
+																							taiKhoanNhanSauGiaoDich.getMataikhoandangnhap(),
+																							taiKhoanNhanSauGiaoDich.getMataikhoanthanhtoan(),
+																							taiKhoanNhanSauGiaoDich.getTaiKhoanDangNhap().getHoten(),
+																							napTienDTO.getMoney(),
+																							"",
+																							1,
+																							1,
+																							new Date(),
+																							null,
+																							1,
+																							1));
+			if(lichSuGiaoDich == null) {
+				return 3;
+			}
+			
+		} else if(napTienDTO.getType() == 1) {
+			soDuNguoiNhan = soDuNguoiNhan + soTienGiaoDich;
+			taiKhoanNguoiNhan.setSodu(soDuNguoiNhan+"");
+			TaiKhoanThanhToan taiKhoanNhanSauGiaoDich = taiKhoanThanhToanRepository.save(taiKhoanNguoiNhan);
+			
+			if(taiKhoanNhanSauGiaoDich == null) {
+				return 3;
+			}
+		}
+		return 0;
 	}
 
 }

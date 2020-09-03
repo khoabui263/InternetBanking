@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.khoa.dto.FindTaiKhoanGuiVaNhanDTO;
 import com.khoa.dto.LichSuGiaoDichDTO;
+import com.khoa.dto.NapTienDTO;
 import com.khoa.dto.ResultMessage;
 import com.khoa.dto.TaiKhoanDangNhapDTO;
 import com.khoa.dto.TaiKhoanThanhToanDTO;
@@ -72,5 +73,22 @@ public class ApiTaiKhoanThanhToan {
 		return ResponseEntity.status(HttpStatus.OK).body(otp);
 	}
 	
-	
+	@PostMapping("chargeMoney")
+	public ResponseEntity chargeMoney(@RequestBody NapTienDTO napTienDTO) {
+		int ketQua = taiKhoanThanhToanService.chargeMoney(napTienDTO);
+		switch (ketQua) {
+		case 1:
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Tài khoản gửi hoặc nhận không tồn tại"));
+			
+		case 2:
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("2", "Số tiền gửi lớn hơn số dư trong tài khoản gửi"));
+			
+		case 3:
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("3", "Nap tiền thất bại"));
+
+		default:
+			break;
+		}		
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Nap tiền thành công"));
+	}
 }

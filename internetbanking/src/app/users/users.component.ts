@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getName();
-    // this.nhacNoRealTime();
+    this.nhacNoRealTime();
   }
 
   logOut() {
