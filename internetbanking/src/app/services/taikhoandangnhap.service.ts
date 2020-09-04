@@ -26,4 +26,12 @@ export class TaiKhoanDangNhapService {
         return this.http.post(`${environment.apiUrl}/taikhoandangnhap/sendEmailChuyenTien`, value);
     }
 
+    sendEmailConfirmInfo(value: any) {
+        return this.http.post(`${environment.apiUrl}/taikhoandangnhap/sendEmailConfirmInfo`, value);
+    }
+
+    confirmInfo(value: any) {
+        return this.http.post(`${environment.apiUrl}/taikhoandangnhap/confirmInfo`, value);
+    }
+
 }

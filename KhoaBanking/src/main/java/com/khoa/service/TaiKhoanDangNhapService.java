@@ -2,6 +2,7 @@ package com.khoa.service;
 
 import java.util.List;
 
+import com.khoa.dto.ConfirmInfoDTO;
 import com.khoa.dto.TaiKhoanDangNhapDTO;
 
 public interface TaiKhoanDangNhapService {
@@ -15,4 +16,6 @@ public interface TaiKhoanDangNhapService {
 	List<TaiKhoanDangNhapDTO> findAllDetailsTaiKhoanDangNhap();
 	TaiKhoanDangNhapDTO sendEmailChangePassWord(String email, String passWord);
 	TaiKhoanDangNhapDTO sendEmailChuyenTien(String email);
+	int sendEmailConfirmInfo(TaiKhoanDangNhapDTO taiKhoanDangNhapDTO);
+	TaiKhoanDangNhapDTO confirmInfo(ConfirmInfoDTO confirmInfoDTO);
 }

@@ -28,5 +28,7 @@ public interface TaiKhoanThanhToanRepository extends JpaRepository<TaiKhoanThanh
 	public TaiKhoanThanhToan findFirstByMataikhoanthanhtoanAndTrangthai(long mataikhoanthanhtoan, int trangthai);
 	
 	public TaiKhoanThanhToan findFirstByMataikhoanthanhtoanAndMataikhoandangnhap(long mataikhoanthanhtoan, int mataikhoandangnhap);
+
+	public TaiKhoanThanhToan findTopByOrderByMataikhoanthanhtoanDesc();
 	
 }

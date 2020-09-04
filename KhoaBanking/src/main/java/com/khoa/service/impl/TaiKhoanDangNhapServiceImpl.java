@@ -9,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import com.khoa.dto.ConfirmInfoDTO;
 import com.khoa.dto.TaiKhoanDangNhapDTO;
 import com.khoa.entity.OTP;
 import com.khoa.entity.TaiKhoanDangNhap;
+import com.khoa.entity.TaiKhoanThanhToan;
 import com.khoa.repository.OTPRepository;
 import com.khoa.repository.TaiKhoanDangNhapRepository;
+import com.khoa.repository.TaiKhoanThanhToanRepository;
 import com.khoa.service.TaiKhoanDangNhapService;
 import com.khoa.util.EmailTypesConstant;
 import com.khoa.util.EmailUtil;
@@ -23,6 +26,9 @@ public class TaiKhoanDangNhapServiceImpl implements TaiKhoanDangNhapService {
 
 	@Autowired
 	private TaiKhoanDangNhapRepository taiKhoanDangNhapRepository;
+	
+	@Autowired
+	private TaiKhoanThanhToanRepository taiKhoanThanhToanRepository;
 	
 	@Autowired
 	private OTPRepository oTPRepository;
@@ -108,6 +114,63 @@ public class TaiKhoanDangNhapServiceImpl implements TaiKhoanDangNhapService {
 		oTPRepository.save(new OTP(number, email, new Date()));
 		
 		emailUtil.transfer(number+"", email, EmailTypesConstant.TRANSFER);
+		return new TaiKhoanDangNhapDTO();
+	}
+
+	@Override
+	public int sendEmailConfirmInfo(TaiKhoanDangNhapDTO taiKhoanDangNhapDTO) {
+		TaiKhoanDangNhap taiKhoanDangNhap = taiKhoanDangNhapRepository.findByEmailOrSodienthoai(taiKhoanDangNhapDTO.getEmail(), taiKhoanDangNhapDTO.getSodienthoai());
+		if(taiKhoanDangNhap != null) {
+			return 1;
+		}
+		
+		Random rd = new Random();
+		int number = rd.nextInt((999999 - 100000) + 1) + 100000;
+		oTPRepository.save(new OTP(number, taiKhoanDangNhapDTO.getEmail(), new Date()));
+		int ketQua = emailUtil.transfer(number+"", taiKhoanDangNhapDTO.getEmail(), EmailTypesConstant.ADDNEWACCOUNT);
+		if(ketQua == 0) {
+			return 2;
+		}
+		return 0;
+	}
+
+	@Override
+	public TaiKhoanDangNhapDTO confirmInfo(ConfirmInfoDTO confirmInfoDTO) {
+		OTP otp = oTPRepository.findByMaotpAndEmail(confirmInfoDTO.getOtp(), confirmInfoDTO.getEmail());
+		Date now = new Date();
+		if(otp == null || now.getTime() < otp.getThoigianluu().getTime() || now.getTime() > (otp.getThoigianluu().getTime() + 3600000)) {
+			oTPRepository.delete(otp);
+			return null;
+		}
+		oTPRepository.delete(otp);
+		String hashPassWord = BCrypt.hashpw(confirmInfoDTO.getMatkhau(), BCrypt.gensalt(12));
+		
+		TaiKhoanDangNhap taiKhoanDangNhap = new TaiKhoanDangNhap();
+		taiKhoanDangNhap.setHoten(confirmInfoDTO.getHoten());
+		taiKhoanDangNhap.setEmail(confirmInfoDTO.getEmail());
+		taiKhoanDangNhap.setSodienthoai(confirmInfoDTO.getSodienthoai());
+		taiKhoanDangNhap.setMatkhau(hashPassWord);
+		taiKhoanDangNhap.setMaloainguoidung(3);
+		taiKhoanDangNhap.setTrangthai(0);
+		taiKhoanDangNhap.setTrangthai(1);
+		
+		TaiKhoanDangNhap taiKhoanMoi = taiKhoanDangNhapRepository.save(taiKhoanDangNhap);
+		if(taiKhoanMoi == null) {
+			return null;
+		}
+		
+		TaiKhoanThanhToan lastestTaiKhoanThanhToan = taiKhoanThanhToanRepository.findTopByOrderByMataikhoanthanhtoanDesc();
+		TaiKhoanThanhToan taiKhoanThanhToan = new TaiKhoanThanhToan();
+		taiKhoanThanhToan.setMataikhoanthanhtoan(lastestTaiKhoanThanhToan.getMataikhoanthanhtoan() + 1);
+		taiKhoanThanhToan.setMataikhoandangnhap(taiKhoanMoi.getMataikhoan());
+		taiKhoanThanhToan.setSodu(confirmInfoDTO.getSotien());
+		taiKhoanThanhToan.setTrangthai(1);
+		
+		TaiKhoanThanhToan newTaiKhoanThanhToan = taiKhoanThanhToanRepository.save(taiKhoanThanhToan);
+		if(newTaiKhoanThanhToan == null) {
+			return null;
+		}
+		
 		return new TaiKhoanDangNhapDTO();
 	}
 

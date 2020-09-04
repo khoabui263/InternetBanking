@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.khoa.dto.ChangePassWordDTO;
+import com.khoa.dto.ConfirmInfoDTO;
 import com.khoa.dto.ResultMessage;
 import com.khoa.dto.TaiKhoanDangNhapDTO;
 import com.khoa.dto.TaiKhoanThanhToanDTO;
@@ -61,5 +62,25 @@ public class ApiTaiKhoanDangNhap {
 		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Gửi mail thành công"));
 	}
 	
-
+	@PostMapping("sendEmailConfirmInfo")
+	public ResponseEntity sendEmailConfirmInfo(@RequestBody TaiKhoanDangNhapDTO taiKhoanDangNhapDTO) {
+		int ketQua = taiKhoanDangNhapService.sendEmailConfirmInfo(taiKhoanDangNhapDTO);
+		if(ketQua == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Email và số điện thoại này đã được sử dụng"));
+		} else if(ketQua == 2) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("2", "Gửi mail thất bại"));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Gửi mail thành công"));
+	}
+	
+	@PostMapping("confirmInfo")
+	public ResponseEntity confirmInfo(@RequestBody ConfirmInfoDTO confirmInfoDTO) {
+		TaiKhoanDangNhapDTO taiKhoanDanhNhap = taiKhoanDangNhapService.confirmInfo(confirmInfoDTO);
+		if(taiKhoanDanhNhap == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Tạo tài khoản thất bại"));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Tạo tài khoản thành công"));
+	}
 }

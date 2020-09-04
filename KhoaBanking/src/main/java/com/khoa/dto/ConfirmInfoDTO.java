@@ -1,38 +1,30 @@
 package com.khoa.dto;
 
-public class TaiKhoanDangNhapDTO {
+public class ConfirmInfoDTO {
 	private int mataikhoan;
 	private String hoten;
 	private String email;
 	private String sodienthoai;
+	private String sotien;
 	private String matkhau;
-	private String refeshtoken;
 	private int maloainguoidung;
-	private String tenloainguoidung;
 	private int otp;
 	
-	public TaiKhoanDangNhapDTO() {
+	public ConfirmInfoDTO() {
 		
 	}
 
-	public TaiKhoanDangNhapDTO(int mataikhoan, String hoten, String email, String sodienthoai, String matkhau,
-			String refeshtoken, int maloainguoidung) {
+	public ConfirmInfoDTO(int mataikhoan, String hoten, String email, String sodienthoai, String sotien, String matkhau,
+			int maloainguoidung, int otp) {
 		super();
 		this.mataikhoan = mataikhoan;
 		this.hoten = hoten;
 		this.email = email;
 		this.sodienthoai = sodienthoai;
+		this.sotien = sotien;
 		this.matkhau = matkhau;
-		this.refeshtoken = refeshtoken;
 		this.maloainguoidung = maloainguoidung;
-	}
-
-	public TaiKhoanDangNhapDTO(String hoten, String email, String sodienthoai, String tenloainguoidung) {
-		super();
-		this.hoten = hoten;
-		this.email = email;
-		this.sodienthoai = sodienthoai;
-		this.tenloainguoidung = tenloainguoidung;
+		this.otp = otp;
 	}
 
 	public int getMataikhoan() {
@@ -67,6 +59,14 @@ public class TaiKhoanDangNhapDTO {
 		this.sodienthoai = sodienthoai;
 	}
 
+	public String getSotien() {
+		return sotien;
+	}
+
+	public void setSotien(String sotien) {
+		this.sotien = sotien;
+	}
+
 	public String getMatkhau() {
 		return matkhau;
 	}
@@ -75,28 +75,12 @@ public class TaiKhoanDangNhapDTO {
 		this.matkhau = matkhau;
 	}
 
-	public String getRefeshtoken() {
-		return refeshtoken;
-	}
-
-	public void setRefeshtoken(String refeshtoken) {
-		this.refeshtoken = refeshtoken;
-	}
-
 	public int getMaloainguoidung() {
 		return maloainguoidung;
 	}
 
 	public void setMaloainguoidung(int maloainguoidung) {
 		this.maloainguoidung = maloainguoidung;
-	}
-
-	public String getTenloainguoidung() {
-		return tenloainguoidung;
-	}
-
-	public void setTenloainguoidung(String tenloainguoidung) {
-		this.tenloainguoidung = tenloainguoidung;
 	}
 
 	public int getOtp() {

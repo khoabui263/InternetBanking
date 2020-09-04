@@ -1,27 +1,35 @@
 <div class="form-group">
     <mat-form-field class="example-half-width">
         <mat-label>Họ tên</mat-label>
-        <input matInput type="text" [(ngModel)]="taoTaiKhoanModel.hoten">
+        <input matInput type="text" [disabled]="confirm" [(ngModel)]="taoTaiKhoanModel.hoten">
     </mat-form-field>
     <mat-form-field class="example-half-width">
         <mat-label>Email</mat-label>
-        <input matInput type="email" [(ngModel)]="taoTaiKhoanModel.email">
+        <input matInput type="email" [disabled]="confirm" [(ngModel)]="taoTaiKhoanModel.email">
     </mat-form-field>
     <mat-form-field class="example-half-width">
         <mat-label>Số điện thoại</mat-label>
-        <input matInput type="number" [(ngModel)]="taoTaiKhoanModel.soDienThoai">
+        <input matInput type="number" [disabled]="confirm" [(ngModel)]="taoTaiKhoanModel.soDienThoai">
     </mat-form-field>
     <mat-form-field class="example-half-width">
         <mat-label>Số tiền nạp lần đầu</mat-label>
-        <input matInput currencyMask [(ngModel)]="taoTaiKhoanModel.money" [options]="{ align: 'left', prefix: '', suffix: ' VND', precision: 0,
+        <input matInput currencyMask [disabled]="confirm" [(ngModel)]="taoTaiKhoanModel.money" [options]="{ align: 'left', prefix: '', suffix: ' VND', precision: 0,
             thousands: '.', allowNegative: false, min: '0', max: 10000000 }" placeholder="Tối thiểu là 100.000VND" />
+    </mat-form-field>
+    <div class="example-button-row">
+        <button mat-raised-button color="primary"  [disabled]="confirm" (click)="sendEmailConfirmInfo()">Xác nhận thông tin</button>
+        <mat-spinner style="margin-top: 10px;" [diameter]="50" *ngIf="showSpinner"></mat-spinner>
+    </div>
+    <mat-form-field class="example-half-width">
+        <mat-label>Mật khẩu</mat-label>
+        <input matInput type="password" [disabled]="!confirm" [(ngModel)]="taoTaiKhoanModel.password">
     </mat-form-field>
     <mat-form-field class="example-half-width">
         <mat-label>Mã OTP</mat-label>
-        <input matInput type="number" [(ngModel)]="taoTaiKhoanModel.otp">
+        <input matInput type="number" [disabled]="!confirm" [(ngModel)]="taoTaiKhoanModel.otp">
     </mat-form-field>
 </div>
 <div class="example-button-row">
-    <button mat-raised-button color="primary">Tạo tài khoản</button>
-    <button mat-raised-button color="warn">Hủy</button>
+    <button mat-raised-button color="primary" [disabled]="!confirm" (click)="confirmInfo()">Tạo tài khoản</button>
+    <button mat-raised-button color="warn" [disabled]="!confirm" (click)="reset()">Hủy</button>
 </div>

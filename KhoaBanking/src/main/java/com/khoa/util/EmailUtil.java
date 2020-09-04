@@ -62,6 +62,12 @@ public class EmailUtil {
 						+ "<strong style='margin-left: 10px; color: red'>Lưu ý: Mã OTP này chỉ có hiệu lực trong vòng 1 tiếng</strong>";
 				message.setContent(htmlContent, "text/html; charset=UTF-8");
 				break;
+				
+			case EmailTypesConstant.ADDNEWACCOUNT:
+				htmlContent = "<h2>Đây là mail xác nhận tạo và liên kết với tài khoản ngân hàng</h2>" + "Mã xác nhận otp của bạn là: " + otp
+						+ "<strong style='margin-left: 10px; color: red'>Lưu ý: Mã OTP này chỉ có hiệu lực trong vòng 1 tiếng</strong>";
+				message.setContent(htmlContent, "text/html; charset=UTF-8");
+				break;
 
 			default:
 				break;
