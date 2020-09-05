@@ -3,6 +3,7 @@ package com.khoa.service;
 import java.util.List;
 
 import com.khoa.dto.DanhSachLichSuGiaoDichDTO;
+import com.khoa.dto.LichSuGiaoDichDetailsDTO;
 import com.khoa.entity.LichSuGiaoDich;
 
 
@@ -17,4 +18,6 @@ public interface LichSuGiaoDichService {
 	DanhSachLichSuGiaoDichDTO getNhanTien(DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO);
 	DanhSachLichSuGiaoDichDTO getTraNo(DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO);
 	DanhSachLichSuGiaoDichDTO getNguoiKhacTraNo(DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO);
+	List<LichSuGiaoDich> getLichSuGiaoDichByEmployee(DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO);
+	LichSuGiaoDichDetailsDTO getLichSuGiaoDichByEmployeeDetails(int id);
 }

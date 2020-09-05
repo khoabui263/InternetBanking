@@ -24,6 +24,7 @@ import { DialogDeletegoinhoComponent } from './users/dialogs/dialog-deletegoinho
 import { DialogUpdatenhacnoComponent } from './users/dialogs/dialog-updatenhacno/dialog-updatenhacno.component';
 import { DialogThanhtoannoComponent } from './users/dialogs/dialog-thanhtoanno/dialog-thanhtoanno.component';
 import { DialogThongbaonoComponent } from './users/dialogs/dialog-thongbaono/dialog-thongbaono.component';
+import { DialogEmployeelichsugiaodichComponent } from './employees/dialogs/dialog-employeelichsugiaodich/dialog-employeelichsugiaodich.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DialogThongbaonoComponent } from './users/dialogs/dialog-thongbaono/dia
     DialogUpdatenhacnoComponent,
     DialogThanhtoannoComponent,
     DialogThongbaonoComponent,
-
+    DialogEmployeelichsugiaodichComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,7 @@ import { DialogThongbaonoComponent } from './users/dialogs/dialog-thongbaono/dia
     DialogUpdatenhacnoComponent,
     DialogThanhtoannoComponent,
     DialogThongbaonoComponent,
+    DialogEmployeelichsugiaodichComponent,
 
   ],
   providers: [

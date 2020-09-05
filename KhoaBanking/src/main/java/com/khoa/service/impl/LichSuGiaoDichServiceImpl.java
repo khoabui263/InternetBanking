@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.khoa.dto.DanhSachLichSuGiaoDichDTO;
+import com.khoa.dto.LichSuGiaoDichDetailsDTO;
 import com.khoa.entity.LichSuGiaoDich;
+import com.khoa.entity.TaiKhoanDangNhap;
 import com.khoa.repository.LichSuGiaoDichRepository;
+import com.khoa.repository.TaiKhoanDangNhapRepository;
 import com.khoa.service.LichSuGiaoDichService;
 
 @Service
@@ -21,6 +24,9 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 
 	@Autowired
 	private LichSuGiaoDichRepository lichSuGiaoDichRepository;
+
+	@Autowired
+	private TaiKhoanDangNhapRepository taiKhoanDangNhapRepository;
 
 	@Override
 	public List<LichSuGiaoDich> findAll() {
@@ -83,11 +89,11 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 		DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String start = danhSachLichSuGiaoDichDTO.getNgaybatdau();
 		String end = danhSachLichSuGiaoDichDTO.getNgayketthuc();
-		
+
 		try {
 			Date startDate = sourceFormat.parse(start);
 			Date endDate = sourceFormat.parse(end);
-			
+
 			Calendar cal = new GregorianCalendar();
 			cal.setTime(endDate);
 			cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -97,7 +103,7 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 			List<LichSuGiaoDich> danhSachChuyenTien = lichSuGiaoDichRepository
 					.findByManguoiguiAndNgaygiaodichBetweenAndMaloaigiaodichNot(
 							danhSachLichSuGiaoDichDTO.getManguoigui(), startDate, endDate, 3);
-			
+
 			danhSachLichSuGiaoDichDTO.setDanhSachChuyenTien(danhSachChuyenTien);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -112,11 +118,11 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 		DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String start = danhSachLichSuGiaoDichDTO.getNgaybatdau();
 		String end = danhSachLichSuGiaoDichDTO.getNgayketthuc();
-		
+
 		try {
 			Date startDate = sourceFormat.parse(start);
 			Date endDate = sourceFormat.parse(end);
-			
+
 			Calendar cal = new GregorianCalendar();
 			cal.setTime(endDate);
 			cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -126,7 +132,7 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 			List<LichSuGiaoDich> danhSachNhanTien = lichSuGiaoDichRepository
 					.findByManguoinhanAndNgaygiaodichBetweenAndMaloaigiaodichNot(
 							danhSachLichSuGiaoDichDTO.getManguoigui(), startDate, endDate, 3);
-			
+
 			danhSachLichSuGiaoDichDTO.setDanhSachNhanTien(danhSachNhanTien);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -141,11 +147,11 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 		DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String start = danhSachLichSuGiaoDichDTO.getNgaybatdau();
 		String end = danhSachLichSuGiaoDichDTO.getNgayketthuc();
-		
+
 		try {
 			Date startDate = sourceFormat.parse(start);
 			Date endDate = sourceFormat.parse(end);
-			
+
 			Calendar cal = new GregorianCalendar();
 			cal.setTime(endDate);
 			cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -153,9 +159,9 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 			endDate = cal.getTime();
 
 			List<LichSuGiaoDich> danhSachTraNo = lichSuGiaoDichRepository
-					.findByManguoiguiAndNgaygiaodichBetweenAndMaloaigiaodich(
-							danhSachLichSuGiaoDichDTO.getManguoigui(), startDate, endDate, 3);
-			
+					.findByManguoiguiAndNgaygiaodichBetweenAndMaloaigiaodich(danhSachLichSuGiaoDichDTO.getManguoigui(),
+							startDate, endDate, 3);
+
 			danhSachLichSuGiaoDichDTO.setDanhSachTraNo(danhSachTraNo);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -170,11 +176,11 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 		DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String start = danhSachLichSuGiaoDichDTO.getNgaybatdau();
 		String end = danhSachLichSuGiaoDichDTO.getNgayketthuc();
-		
+
 		try {
 			Date startDate = sourceFormat.parse(start);
 			Date endDate = sourceFormat.parse(end);
-			
+
 			Calendar cal = new GregorianCalendar();
 			cal.setTime(endDate);
 			cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -182,9 +188,9 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 			endDate = cal.getTime();
 
 			List<LichSuGiaoDich> danhSachNguoiKhacTraNo = lichSuGiaoDichRepository
-					.findByManguoinhanAndNgaygiaodichBetweenAndMaloaigiaodich(
-							danhSachLichSuGiaoDichDTO.getManguoigui(), startDate, endDate, 3);
-			
+					.findByManguoinhanAndNgaygiaodichBetweenAndMaloaigiaodich(danhSachLichSuGiaoDichDTO.getManguoigui(),
+							startDate, endDate, 3);
+
 			danhSachLichSuGiaoDichDTO.setDanhSachNguoiKhacTraNo(danhSachNguoiKhacTraNo);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -192,6 +198,69 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 		}
 
 		return danhSachLichSuGiaoDichDTO;
+	}
+
+	@Override
+	public List<LichSuGiaoDich> getLichSuGiaoDichByEmployee(DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO) {
+		TaiKhoanDangNhap taiKhoanDangNhap = taiKhoanDangNhapRepository
+				.findByEmailOrSodienthoai(danhSachLichSuGiaoDichDTO.getEmail(), danhSachLichSuGiaoDichDTO.getEmail());
+		if (taiKhoanDangNhap == null) {
+			return null;
+		}
+
+		DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String start = danhSachLichSuGiaoDichDTO.getNgaybatdau();
+		String end = danhSachLichSuGiaoDichDTO.getNgayketthuc();
+
+		try {
+			Date startDate = sourceFormat.parse(start);
+			Date endDate = sourceFormat.parse(end);
+
+			Calendar cal = new GregorianCalendar();
+			cal.setTime(endDate);
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+			cal.add(Calendar.MINUTE, -1);
+			endDate = cal.getTime();
+
+			return lichSuGiaoDichRepository.findByManguoiguiAndNgaygiaodichBetweenOrManguoinhanAndNgaygiaodichBetween(
+					taiKhoanDangNhap.getMataikhoan(), startDate, endDate, taiKhoanDangNhap.getMataikhoan(), startDate,
+					endDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	@Override
+	public LichSuGiaoDichDetailsDTO getLichSuGiaoDichByEmployeeDetails(int id) {
+		LichSuGiaoDich lichSuGiaoDich = lichSuGiaoDichRepository.findById(id).get();
+		if(lichSuGiaoDich == null) {
+			return null;
+		}
+
+		LichSuGiaoDichDetailsDTO chiTietLichSuGiaoDich = new LichSuGiaoDichDetailsDTO();
+		chiTietLichSuGiaoDich.setId(lichSuGiaoDich.getId());
+		chiTietLichSuGiaoDich.setManguoigui(lichSuGiaoDich.getManguoigui());
+		chiTietLichSuGiaoDich.setMataikhoannguoigui(lichSuGiaoDich.getMataikhoannguoigui());
+		chiTietLichSuGiaoDich.setTennguoigui(lichSuGiaoDich.getTennguoigui());
+		chiTietLichSuGiaoDich.setManguoinhan(lichSuGiaoDich.getManguoinhan());
+		chiTietLichSuGiaoDich.setMataikhoannguoinhan(lichSuGiaoDich.getMataikhoannguoinhan());
+		chiTietLichSuGiaoDich.setTennguoinhan(lichSuGiaoDich.getTennguoinhan());
+		chiTietLichSuGiaoDich.setSotiengiaodich(lichSuGiaoDich.getSotiengiaodich());
+		chiTietLichSuGiaoDich.setNoidungchuyenkhoan(lichSuGiaoDich.getNoidungchuyenkhoan());
+		chiTietLichSuGiaoDich.setManganhanggui(lichSuGiaoDich.getManganhanggui());
+		chiTietLichSuGiaoDich.setTennganhanggui(lichSuGiaoDich.getNganhanggui().getTennganhang());
+		chiTietLichSuGiaoDich.setManganhangnhan(lichSuGiaoDich.getManganhangnhan());
+		chiTietLichSuGiaoDich.setTennganhangnhan(lichSuGiaoDich.getNganhangnhan().getTennganhang());
+		chiTietLichSuGiaoDich.setNgaygiaodich(lichSuGiaoDich.getNgaygiaodich());
+		chiTietLichSuGiaoDich.setSignature(lichSuGiaoDich.getSignature());
+		chiTietLichSuGiaoDich.setMaloaigiaodich(lichSuGiaoDich.getMaloaigiaodich());
+		chiTietLichSuGiaoDich.setTenloaigiaodich(lichSuGiaoDich.getLoaigiaodich().getTenloaigiaodich());
+		chiTietLichSuGiaoDich.setTrangthai(lichSuGiaoDich.getTrangthai());
+		
+		return chiTietLichSuGiaoDich;
 	}
 
 }

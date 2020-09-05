@@ -1,0 +1,20 @@
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h2 id="modal-title">Chi tiết giao dịch</h2>
+    </header>
+    <section id="modal-body">
+        <p>Họ tên người gửi: {{ tennguoigui }}</p>
+        <p>Họ tên người nhận: {{ tennguoinhan }}</p>
+        <p>Mã tài khoản gửi: {{ mataikhoannguoigui }}</p>
+        <p>Mã tài khoản nhận: {{ mataikhoannguoinhan }}</p>
+        <p>Số tiền giao dịch: {{ sotiengiaodich | currency:'VND':'symbol' }}</p>
+        <p>Nội dung giao dịch: {{ noidungchuyenkhoan }}</p>
+        <p>Ngày giao dịch: {{ ngaygiaodich | date: 'dd/MM/yyyy - hh:mm:ss a'}}</p>
+        <p>Tên ngân hàng gửi: {{ tennganhanggui }}</p>
+        <p>Tên ngân hàng nhận: {{ tennganhangnhan }}</p>
+        <p>Tên loại giao dịch: {{ tenloaigiaodich }}</p>
+    </section>
+    <footer id="modal-footer">
+        <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Đóng</button>
+    </footer>
+</div>

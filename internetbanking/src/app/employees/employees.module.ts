@@ -11,13 +11,12 @@ import { TaotaikhoanComponent } from './quanlykhachhang/taotaikhoan/taotaikhoan.
 import { NaptienvaotaikhoanComponent } from './quanlykhachhang/naptienvaotaikhoan/naptienvaotaikhoan.component';
 import { LichsugiaodichComponent } from './quanlykhachhang/lichsugiaodich/lichsugiaodich.component';
 
-
 @NgModule({
   declarations: [
     EmployeesComponent,
     LichsugiaodichComponent,
     TaotaikhoanComponent,
-    NaptienvaotaikhoanComponent
+    NaptienvaotaikhoanComponent,
   ],
   imports: [
     CommonModule,

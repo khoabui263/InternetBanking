@@ -28,4 +28,12 @@ export class LichsugiaodichService {
   getNguoiKhacTraNo(value: any) {
     return this.http.post(`${environment.apiUrl}/lichsugiaodich/getNguoiKhacTraNo`, value);
   }
+
+  getLichSuGiaoDichByEmployee(value: any) {
+    return this.http.post(`${environment.apiUrl}/lichsugiaodich/getLichSuGiaoDichByEmployee`, value);
+  }
+
+  getLichSuGiaoDichByEmployeeDetails(value: any) {
+    return this.http.post(`${environment.apiUrl}/lichsugiaodich/getLichSuGiaoDichByEmployeeDetails`, value);
+  }
 }

@@ -1,5 +1,7 @@
 package com.khoa.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.khoa.dto.DanhSachLichSuGiaoDichDTO;
+import com.khoa.dto.LichSuGiaoDichDetailsDTO;
 import com.khoa.dto.ResultMessage;
 import com.khoa.entity.GoiNho;
 import com.khoa.entity.LichSuGiaoDich;
@@ -52,5 +55,23 @@ public class ApiLichSuGiaoDich {
 	public ResponseEntity getNguoiKhacTraNo(@RequestBody DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO) {
 		DanhSachLichSuGiaoDichDTO danhSach = lichSuGiaoDichService.getNguoiKhacTraNo(danhSachLichSuGiaoDichDTO);
 		return ResponseEntity.ok(danhSach);
+	}
+	
+	@PostMapping("getLichSuGiaoDichByEmployee")
+	public ResponseEntity getLichSuGiaoDichByEmployee(@RequestBody DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO) {
+		List<LichSuGiaoDich> danhSach = lichSuGiaoDichService.getLichSuGiaoDichByEmployee(danhSachLichSuGiaoDichDTO);
+		if(danhSach == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Không tìm thấy tài khoản"));
+		}
+		return ResponseEntity.ok(danhSach);
+	}
+	
+	@PostMapping("getLichSuGiaoDichByEmployeeDetails")
+	public ResponseEntity getLichSuGiaoDichByEmployeeDetails(@RequestBody LichSuGiaoDichDetailsDTO lichSuGiaoDichDetailsDTO) {
+		LichSuGiaoDichDetailsDTO chiTietLichSuGiaoDich = lichSuGiaoDichService.getLichSuGiaoDichByEmployeeDetails(lichSuGiaoDichDetailsDTO.getId());
+		if(chiTietLichSuGiaoDich == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Tìm kiếm thất bại"));
+		}
+		return ResponseEntity.ok(chiTietLichSuGiaoDich);
 	}
 }
