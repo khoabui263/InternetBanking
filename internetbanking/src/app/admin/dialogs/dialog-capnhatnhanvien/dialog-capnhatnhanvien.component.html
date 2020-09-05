@@ -1,0 +1,24 @@
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h2 id="modal-title">Cập nhật thông tin nhân viên</h2>
+    </header>
+    <section id="modal-body">
+        <mat-form-field class="example-half-width">
+            <mat-label>Họ tên</mat-label>
+            <input matInput type="text" [(ngModel)]="hoten" [disabled]="!saved">
+        </mat-form-field>
+        <mat-form-field class="example-half-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" [(ngModel)]="email"  [disabled]="!saved">
+        </mat-form-field>
+        <mat-form-field class="example-half-width">
+            <mat-label>Số điện thoại</mat-label>
+            <input matInput type="text" [(ngModel)]="sodienthoai" [disabled]="!saved">
+        </mat-form-field>
+        <p style="color: blue;" *ngIf="!saved">{{ ketQua }}</p>
+    </section>
+    <footer id="modal-footer">
+        <button mat-raised-button id="modal-cancel-button" (click)="updateEmployee()" *ngIf="saved">Cập nhật</button>
+        <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Đóng</button>
+    </footer>
+</div>

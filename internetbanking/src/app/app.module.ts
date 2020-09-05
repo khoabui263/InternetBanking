@@ -25,6 +25,8 @@ import { DialogUpdatenhacnoComponent } from './users/dialogs/dialog-updatenhacno
 import { DialogThanhtoannoComponent } from './users/dialogs/dialog-thanhtoanno/dialog-thanhtoanno.component';
 import { DialogThongbaonoComponent } from './users/dialogs/dialog-thongbaono/dialog-thongbaono.component';
 import { DialogEmployeelichsugiaodichComponent } from './employees/dialogs/dialog-employeelichsugiaodich/dialog-employeelichsugiaodich.component';
+import { DialogCapnhatnhanvienComponent } from './admin/dialogs/dialog-capnhatnhanvien/dialog-capnhatnhanvien.component';
+import { DialogXoanhanvienComponent } from './admin/dialogs/dialog-xoanhanvien/dialog-xoanhanvien.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { DialogEmployeelichsugiaodichComponent } from './employees/dialogs/dialo
     DialogThanhtoannoComponent,
     DialogThongbaonoComponent,
     DialogEmployeelichsugiaodichComponent,
-    
+    DialogCapnhatnhanvienComponent,
+    DialogXoanhanvienComponent
+
   ],
   imports: [
     BrowserModule,
@@ -65,6 +69,8 @@ import { DialogEmployeelichsugiaodichComponent } from './employees/dialogs/dialo
     DialogThanhtoannoComponent,
     DialogThongbaonoComponent,
     DialogEmployeelichsugiaodichComponent,
+    DialogCapnhatnhanvienComponent,
+    DialogXoanhanvienComponent
 
   ],
   providers: [

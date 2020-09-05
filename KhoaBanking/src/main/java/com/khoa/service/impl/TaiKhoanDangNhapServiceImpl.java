@@ -174,4 +174,63 @@ public class TaiKhoanDangNhapServiceImpl implements TaiKhoanDangNhapService {
 		return new TaiKhoanDangNhapDTO();
 	}
 
+	@Override
+	public int createEmployee(TaiKhoanDangNhap taiKhoanDangNhap) {
+		TaiKhoanDangNhap taiKhoanExisted= taiKhoanDangNhapRepository.findByEmailOrSodienthoai(taiKhoanDangNhap.getEmail(), taiKhoanDangNhap.getSodienthoai());
+		if(taiKhoanExisted != null) {
+			return 2;
+		}
+		
+		String hashPassWord = BCrypt.hashpw(taiKhoanDangNhap.getMatkhau(), BCrypt.gensalt(12));
+		TaiKhoanDangNhap taiKhoanNhanVien = new TaiKhoanDangNhap();
+		taiKhoanNhanVien.setHoten(taiKhoanDangNhap.getHoten());
+		taiKhoanNhanVien.setEmail(taiKhoanDangNhap.getEmail());
+		taiKhoanNhanVien.setSodienthoai(taiKhoanDangNhap.getSodienthoai());
+		taiKhoanNhanVien.setMatkhau(hashPassWord);
+		taiKhoanNhanVien.setMaloainguoidung(2);
+		taiKhoanNhanVien.setTinhtrangno(0);
+		taiKhoanNhanVien.setTrangthai(1);
+		
+		TaiKhoanDangNhap created = taiKhoanDangNhapRepository.save(taiKhoanNhanVien);
+		if(created == null) {
+			return 1;
+		}
+		return 0;
+	}
+
+	@Override
+	public List<TaiKhoanDangNhap> findAllEmployee() {
+		return taiKhoanDangNhapRepository.findByMaloainguoidungAndTrangthai(2, 1);
+	}
+
+	@Override
+	public List<TaiKhoanDangNhap> searchTaiKhoanNhanVien(String email) {
+		return taiKhoanDangNhapRepository.searchTaiKhoanNhanVien(email);
+	}
+
+	@Override
+	public TaiKhoanDangNhap updateEmployee(TaiKhoanDangNhap taiKhoanDangNhap) {
+		TaiKhoanDangNhap taiKhoanExisted = taiKhoanDangNhapRepository.findByMataikhoanAndTrangthai(taiKhoanDangNhap.getMataikhoan(), 1);
+		if(taiKhoanExisted == null) {
+			return null;
+		}
+		
+		taiKhoanExisted.setHoten(taiKhoanDangNhap.getHoten());
+		taiKhoanExisted.setEmail(taiKhoanDangNhap.getEmail());
+		taiKhoanExisted.setSodienthoai(taiKhoanDangNhap.getSodienthoai());
+		
+		return taiKhoanDangNhapRepository.save(taiKhoanExisted);
+	}
+
+	@Override
+	public TaiKhoanDangNhap deleteEmployee(int mataikhoan) {
+		TaiKhoanDangNhap taiKhoanExisted = taiKhoanDangNhapRepository.findByMataikhoanAndTrangthai(mataikhoan, 1);
+		if(taiKhoanExisted == null) {
+			return null;
+		}
+		
+		taiKhoanExisted.setTrangthai(0);
+		return taiKhoanDangNhapRepository.save(taiKhoanExisted);
+	}
+
 }

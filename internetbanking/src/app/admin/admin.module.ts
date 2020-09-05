@@ -9,13 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { MatPaginatorModule } from '@angular/material';
 import { NgxCurrencyModule } from 'ngx-currency';
-
+import { TaotaikhoannhanvienComponent } from './taotaikhoannhanvien/taotaikhoannhanvien.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     LichsugiaodichComponent,
-    QuanlynhanvienComponent
+    QuanlynhanvienComponent,
+    TaotaikhoannhanvienComponent,
   ],
   imports: [
     CommonModule,

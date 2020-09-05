@@ -42,4 +42,14 @@ export class SearchService {
     return this.http.post(`${environment.apiUrl}/search/searchGoiNho`, value);
   }
 
+  searchTaiKhoanNhanVien(term: string): any {
+    if (!term.trim()) {
+      return of([]);
+    }
+    const value = {
+      email: term
+    };
+    return this.http.post(`${environment.apiUrl}/search/searchTaiKhoanNhanVien`, value);
+  }
+
 }

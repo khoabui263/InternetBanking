@@ -6,7 +6,6 @@ import { environment } from 'src/environments/environment';
     providedIn: 'root'
 })
 export class TaiKhoanDangNhapService {
-
     constructor(private http: HttpClient) { }
 
     findAllDetailsTaiKhoanDangNhap(value: any) {
@@ -34,4 +33,19 @@ export class TaiKhoanDangNhapService {
         return this.http.post(`${environment.apiUrl}/taikhoandangnhap/confirmInfo`, value);
     }
 
+    createEmployee(value: any) {
+        return this.http.post(`${environment.apiUrl}/taikhoandangnhap/createEmployee`, value);
+    }
+
+    findAllEmployee() {
+        return this.http.get(`${environment.apiUrl}/taikhoandangnhap/findAllEmployee`);
+    }
+
+    updateEmployee(value: any) {
+        return this.http.post(`${environment.apiUrl}/taikhoandangnhap/updateEmployee`, value);
+    }
+
+    deleteEmployee(value: { mataikhoan: any; }) {
+        return this.http.post(`${environment.apiUrl}/taikhoandangnhap/deleteEmployee`, value);
+    }
 }

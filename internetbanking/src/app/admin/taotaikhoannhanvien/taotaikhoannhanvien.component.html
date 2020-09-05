@@ -1,0 +1,26 @@
+<div class="form-group">
+    <mat-form-field class="example-half-width">
+        <mat-label>Họ tên</mat-label>
+        <input matInput type="text" [(ngModel)]="taoTaiKhoanModel.hoten">
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="taoTaiKhoanModel.email">
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Số điện thoại</mat-label>
+        <input matInput type="number" [(ngModel)]="taoTaiKhoanModel.soDienThoai">
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Mật khẩu</mat-label>
+        <input matInput type="password" [(ngModel)]="taoTaiKhoanModel.matKhau">
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Nhập lại mật khẩu</mat-label>
+        <input matInput type="password" [(ngModel)]="taoTaiKhoanModel.xacNhanMatKhau">
+    </mat-form-field>
+</div>
+<div class="example-button-row">
+    <button mat-raised-button color="primary" (click)="createEmployee()">Tạo tài khoản</button>
+    <button mat-raised-button color="warn" (click)="reset()">Hủy</button>
+</div>

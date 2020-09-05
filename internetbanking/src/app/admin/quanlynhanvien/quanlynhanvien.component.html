@@ -1,1 +1,46 @@
-<p>quanlynhanvien works!</p>
+<div>
+    <mat-form-field class="example-half-width">
+        <mat-label>Tìm kiếm tài khoản</mat-label>
+        <input matInput type="text" placeholder="Nhập email hoặc số điện thoại nhân viên" (input)="search($event.target.value)" [value]="email">
+    </mat-form-field>
+
+    <ul *ngIf="Show" class="search-result">
+        <li *ngFor="let item of list$ | async" [value]="item.email"
+            (click)="fill(item.email)">
+            {{ item.hoten }}
+        </li>
+    </ul>
+</div>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="hoten">
+            <th mat-header-cell *matHeaderCellDef> Họ tên </th>
+            <td mat-cell *matCellDef="let element"> {{element.hoten}} </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+        <ng-container matColumnDef="sodienthoai">
+            <th mat-header-cell *matHeaderCellDef> Số điện thoại </th>
+            <td mat-cell *matCellDef="let element"> {{element.sodienthoai}} </td>
+        </ng-container>
+        <ng-container matColumnDef="chinhsua">
+            <th mat-header-cell *matHeaderCellDef> Chỉnh sửa thông tin </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button color="primary" style="margin-right: 10px;" [value]="element.mataikhoan"
+                    (click)="update(element.mataikhoan, element.hoten, element.email, element.sodienthoai)">
+                    Cập nhật nhân viên
+                </button>
+                <button mat-raised-button color="warn" [value]="element.mataikhoan"
+                    (click)="delete(element.mataikhoan)">
+                    Xóa nhân viên
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

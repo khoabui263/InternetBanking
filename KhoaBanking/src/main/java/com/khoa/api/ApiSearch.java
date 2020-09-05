@@ -16,8 +16,10 @@ import com.khoa.dto.ResultMessage;
 import com.khoa.dto.TaiKhoanDangNhapDTO;
 import com.khoa.dto.TaiKhoanThanhToanDTO;
 import com.khoa.entity.GoiNho;
+import com.khoa.entity.TaiKhoanDangNhap;
 import com.khoa.entity.TaiKhoanThanhToan;
 import com.khoa.service.GoiNhoService;
+import com.khoa.service.TaiKhoanDangNhapService;
 import com.khoa.service.TaiKhoanThanhToanService;
 
 @RestController
@@ -26,6 +28,9 @@ public class ApiSearch {
 	
 	@Autowired
 	private TaiKhoanThanhToanService taiKhoanThanhToanService;
+	
+	@Autowired
+	private TaiKhoanDangNhapService taiKhoanDangNhapService;
 	
 	@Autowired
 	private GoiNhoService goiNhoService;
@@ -45,6 +50,15 @@ public class ApiSearch {
 	@PostMapping("searchGoiNho")
 	public ResponseEntity searchGoiNho(@RequestBody GoiNho goiNho) {
 		List<GoiNhoDTO> search = goiNhoService.searchGoiNho(goiNho.getMataikhoancannho(), goiNho.getChuoimanguoigoinho(), goiNho.getManganhang());
+		if(search == null) {
+			return ResponseEntity.status(HttpStatus.OK).body("");
+		}
+		return ResponseEntity.ok(search);
+	}
+	
+	@PostMapping("searchTaiKhoanNhanVien")
+	public ResponseEntity searchTaiKhoanNhanVien(@RequestBody TaiKhoanDangNhap taiKhoanDangNhap) {
+		List<TaiKhoanDangNhap> search = taiKhoanDangNhapService.searchTaiKhoanNhanVien(taiKhoanDangNhap.getEmail());
 		if(search == null) {
 			return ResponseEntity.status(HttpStatus.OK).body("");
 		}

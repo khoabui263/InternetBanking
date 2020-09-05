@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.khoa.dto.ResultMessage;
 import com.khoa.dto.TaiKhoanDangNhapDTO;
 import com.khoa.dto.TaiKhoanThanhToanDTO;
 import com.khoa.entity.OTP;
+import com.khoa.entity.TaiKhoanDangNhap;
 import com.khoa.service.OTPService;
 import com.khoa.service.TaiKhoanDangNhapService;
 
@@ -83,4 +85,42 @@ public class ApiTaiKhoanDangNhap {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Tạo tài khoản thành công"));
 	}
+	
+	@PostMapping("createEmployee")
+	public ResponseEntity createEmployee(@RequestBody TaiKhoanDangNhap taiKhoanDangNhap) {
+		int ketQua = taiKhoanDangNhapService.createEmployee(taiKhoanDangNhap);
+		if(ketQua == 2) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("2", "Tài khoản đã tồn tại"));
+		} else if(ketQua == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Tạo tài khoản nhân viên thất bại"));
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Tạo tài khoản nhân viên thành công"));
+	}
+	
+	@GetMapping("findAllEmployee")
+	public ResponseEntity createEmployee() {
+		List<TaiKhoanDangNhap> danhSachNhanVien = taiKhoanDangNhapService.findAllEmployee();
+		return ResponseEntity.ok(danhSachNhanVien);
+	}
+	
+	@PostMapping("updateEmployee")
+	public ResponseEntity updateEmployee(@RequestBody TaiKhoanDangNhap taiKhoanDangNhap) {
+		TaiKhoanDangNhap taiKhoanDanhNhap = taiKhoanDangNhapService.updateEmployee(taiKhoanDangNhap);
+		if(taiKhoanDanhNhap == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Cập nhật tài khoản thất bại"));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Cập nhật tài khoản thành công"));
+	}
+	
+	@PostMapping("deleteEmployee")
+	public ResponseEntity deleteEmployee(@RequestBody TaiKhoanDangNhap taiKhoanDangNhap) {
+		TaiKhoanDangNhap taiKhoanDanhNhap = taiKhoanDangNhapService.deleteEmployee(taiKhoanDangNhap.getMataikhoan());
+		if(taiKhoanDanhNhap == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Xóa tài khoản thất bại"));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Xóa tài khoản thành công"));
+	}
+	
 }
