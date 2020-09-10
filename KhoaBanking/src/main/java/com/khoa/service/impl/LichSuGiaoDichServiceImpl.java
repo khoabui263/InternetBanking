@@ -255,7 +255,7 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 		chiTietLichSuGiaoDich.setManganhangnhan(lichSuGiaoDich.getManganhangnhan());
 		chiTietLichSuGiaoDich.setTennganhangnhan(lichSuGiaoDich.getNganhangnhan().getTennganhang());
 		chiTietLichSuGiaoDich.setNgaygiaodich(lichSuGiaoDich.getNgaygiaodich());
-		chiTietLichSuGiaoDich.setSignature(lichSuGiaoDich.getSignature());
+		chiTietLichSuGiaoDich.setSignature(lichSuGiaoDich.getSignatureNguoiGui());
 		chiTietLichSuGiaoDich.setMaloaigiaodich(lichSuGiaoDich.getMaloaigiaodich());
 		chiTietLichSuGiaoDich.setTenloaigiaodich(lichSuGiaoDich.getLoaigiaodich().getTenloaigiaodich());
 		chiTietLichSuGiaoDich.setTrangthai(lichSuGiaoDich.getTrangthai());

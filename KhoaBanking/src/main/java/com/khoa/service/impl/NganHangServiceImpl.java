@@ -50,4 +50,15 @@ public class NganHangServiceImpl implements NganHangService{
 		
 	}
 
+	@Override
+	public NganHangDTO findPartnerCode(String partnercode) {
+		NganHang existed = nganHangRepository.findPartnerCode(partnercode);
+		NganHangDTO dto = new NganHangDTO();
+		dto.setManganhang(existed.getManganhang());
+		dto.setTennganhang(existed.getTennganhang());
+		dto.setPartnercode(existed.getPartnercode());
+		
+		return dto;		
+	}
+
 }

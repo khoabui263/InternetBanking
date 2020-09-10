@@ -19,6 +19,8 @@ public class NganHang {
 	private int manganhang;
 	private String tennganhang;
 	private String partnercode;
+	private String privatekey;
+	private String publickey;
 	
 	@OneToMany(mappedBy = "nganhanggui", fetch = FetchType.LAZY)
 	private List<LichSuGiaoDich> danhsachtaikhoangui;
@@ -28,6 +30,9 @@ public class NganHang {
 	
 	@OneToMany(mappedBy = "nganhanggoinho", fetch = FetchType.LAZY)
 	private List<GoiNho> nganhanggoinho;
+	
+	@OneToMany(mappedBy = "liennganhang", fetch = FetchType.LAZY)
+	private List<TaiKhoanLienNganHang> danhsachliennganhang;
 
 	public int getManganhang() {
 		return manganhang;
@@ -68,7 +73,36 @@ public class NganHang {
 	public void setDanhsachtaikhoannhan(List<LichSuGiaoDich> danhsachtaikhoannhan) {
 		this.danhsachtaikhoannhan = danhsachtaikhoannhan;
 	}
-	
-	
-	
+
+	public List<GoiNho> getNganhanggoinho() {
+		return nganhanggoinho;
+	}
+
+	public void setNganhanggoinho(List<GoiNho> nganhanggoinho) {
+		this.nganhanggoinho = nganhanggoinho;
+	}
+
+	public List<TaiKhoanLienNganHang> getDanhsachliennganhang() {
+		return danhsachliennganhang;
+	}
+
+	public void setDanhsachliennganhang(List<TaiKhoanLienNganHang> danhsachliennganhang) {
+		this.danhsachliennganhang = danhsachliennganhang;
+	}
+
+	public String getPrivatekey() {
+		return privatekey;
+	}
+
+	public void setPrivatekey(String privatekey) {
+		this.privatekey = privatekey;
+	}
+
+	public String getPublickey() {
+		return publickey;
+	}
+
+	public void setPublickey(String publickey) {
+		this.publickey = publickey;
+	}
 }

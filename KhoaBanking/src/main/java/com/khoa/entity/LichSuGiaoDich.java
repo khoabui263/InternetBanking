@@ -37,7 +37,8 @@ public class LichSuGiaoDich {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ngaygiaodich;
 	
-	private String signature;
+	private String signatureNguoiGui;
+	private String signatureNguoiNhan;
 	private int maloaigiaodich;
 	
 	@Column(columnDefinition="int default 1")
@@ -53,15 +54,15 @@ public class LichSuGiaoDich {
 	@JsonIgnore 
 	private TaiKhoanDangNhap thongtinnguoinhan;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mataikhoannguoigui", insertable = false, updatable = false)
-	@JsonIgnore 
-	private TaiKhoanThanhToan taikhoannguoigui;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mataikhoannguoinhan", insertable = false, updatable = false)
-	@JsonIgnore 
-	private TaiKhoanThanhToan taikhoannguoinhan;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "mataikhoannguoigui", insertable = false, updatable = false)
+//	@JsonIgnore 
+//	private TaiKhoanThanhToan taikhoannguoigui;
+//	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "mataikhoannguoinhan", insertable = false, updatable = false)
+//	@JsonIgnore 
+//	private TaiKhoanThanhToan taikhoannguoinhan;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manganhanggui", insertable = false, updatable = false)
@@ -95,7 +96,7 @@ public class LichSuGiaoDich {
 		this.manganhanggui = manganhanggui;
 		this.manganhangnhan = manganhangnhan;
 		this.ngaygiaodich = ngaygiaodich;
-		this.signature = signature;
+		this.signatureNguoiGui = signature;
 		this.maloaigiaodich = maloaigiaodich;
 		this.trangthai = trangthai;
 	}
@@ -117,7 +118,7 @@ public class LichSuGiaoDich {
 		this.manganhanggui = manganhanggui;
 		this.manganhangnhan = manganhangnhan;
 		this.ngaygiaodich = ngaygiaodich;
-		this.signature = signature;
+		this.signatureNguoiGui = signature;
 		this.maloaigiaodich = maloaigiaodich;
 		this.trangthai = trangthai;
 	}
@@ -202,12 +203,20 @@ public class LichSuGiaoDich {
 		this.ngaygiaodich = ngaygiaodich;
 	}
 
-	public String getSignature() {
-		return signature;
+	public String getSignatureNguoiGui() {
+		return signatureNguoiGui;
 	}
 
-	public void setSignature(String signature) {
-		this.signature = signature;
+	public void setSignatureNguoiGui(String signatureNguoiGui) {
+		this.signatureNguoiGui = signatureNguoiGui;
+	}
+
+	public String getSignatureNguoiNhan() {
+		return signatureNguoiNhan;
+	}
+
+	public void setSignatureNguoiNhan(String signatureNguoiNhan) {
+		this.signatureNguoiNhan = signatureNguoiNhan;
 	}
 
 	public int getMaloaigiaodich() {
@@ -226,21 +235,21 @@ public class LichSuGiaoDich {
 		this.trangthai = trangthai;
 	}
 
-	public TaiKhoanThanhToan getTaikhoannguoigui() {
-		return taikhoannguoigui;
-	}
-
-	public void setTaikhoannguoigui(TaiKhoanThanhToan taikhoannguoigui) {
-		this.taikhoannguoigui = taikhoannguoigui;
-	}
-
-	public TaiKhoanThanhToan getTaikhoannguoinhan() {
-		return taikhoannguoinhan;
-	}
-
-	public void setTaikhoannguoinhan(TaiKhoanThanhToan taikhoannguoinhan) {
-		this.taikhoannguoinhan = taikhoannguoinhan;
-	}
+//	public TaiKhoanThanhToan getTaikhoannguoigui() {
+//		return taikhoannguoigui;
+//	}
+//
+//	public void setTaikhoannguoigui(TaiKhoanThanhToan taikhoannguoigui) {
+//		this.taikhoannguoigui = taikhoannguoigui;
+//	}
+//
+//	public TaiKhoanThanhToan getTaikhoannguoinhan() {
+//		return taikhoannguoinhan;
+//	}
+//
+//	public void setTaikhoannguoinhan(TaiKhoanThanhToan taikhoannguoinhan) {
+//		this.taikhoannguoinhan = taikhoannguoinhan;
+//	}
 
 	public NganHang getNganhanggui() {
 		return nganhanggui;

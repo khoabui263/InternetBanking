@@ -30,13 +30,13 @@ public class TaiKhoanThanhToan {
 //	@JsonIgnore
 	private TaiKhoanDangNhap taiKhoanDangNhap;
 
-	@OneToMany(mappedBy = "taikhoannguoigui", fetch = FetchType.LAZY)
+//	@OneToMany(mappedBy = "taikhoannguoigui", fetch = FetchType.LAZY)
 //	@JsonIgnore
-	private List<LichSuGiaoDich> giaodichdagui;
-	
-	@OneToMany(mappedBy = "taikhoannguoinhan", fetch = FetchType.LAZY)
+//	private List<LichSuGiaoDich> giaodichdagui;
+//	
+//	@OneToMany(mappedBy = "taikhoannguoinhan", fetch = FetchType.LAZY)
 //	@JsonIgnore
-	private List<LichSuGiaoDich> giaodichdanhan;
+//	private List<LichSuGiaoDich> giaodichdanhan;
 	
 	@OneToMany(mappedBy = "taikhoangoinho", fetch = FetchType.LAZY)
 //	@JsonIgnore
@@ -94,21 +94,21 @@ public class TaiKhoanThanhToan {
 		this.taiKhoanDangNhap = taiKhoanDangNhap;
 	}
 
-	public List<LichSuGiaoDich> getGiaodichdagui() {
-		return giaodichdagui;
-	}
-
-	public void setGiaodichdagui(List<LichSuGiaoDich> giaodichdagui) {
-		this.giaodichdagui = giaodichdagui;
-	}
-
-	public List<LichSuGiaoDich> getGiaodichdanhan() {
-		return giaodichdanhan;
-	}
-
-	public void setGiaodichdanhan(List<LichSuGiaoDich> giaodichdanhan) {
-		this.giaodichdanhan = giaodichdanhan;
-	}
+//	public List<LichSuGiaoDich> getGiaodichdagui() {
+//		return giaodichdagui;
+//	}
+//
+//	public void setGiaodichdagui(List<LichSuGiaoDich> giaodichdagui) {
+//		this.giaodichdagui = giaodichdagui;
+//	}
+//
+//	public List<LichSuGiaoDich> getGiaodichdanhan() {
+//		return giaodichdanhan;
+//	}
+//
+//	public void setGiaodichdanhan(List<LichSuGiaoDich> giaodichdanhan) {
+//		this.giaodichdanhan = giaodichdanhan;
+//	}
 	
 	
 	

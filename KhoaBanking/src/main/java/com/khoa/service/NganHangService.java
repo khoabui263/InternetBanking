@@ -11,4 +11,5 @@ public interface NganHangService {
 	void add(NganHang dto);
 	void update(NganHang dto);
 	void delete(int id);
+	NganHangDTO findPartnerCode(String partnercode);
 }

@@ -22,7 +22,9 @@ export class TaotengoinhoComponent implements OnInit {
   };
 
   selectedBank = 1;
-  banks: any[] = [];
+  banks: any[] = [
+    {manganhang: 1, tennganhang: 'Nội bộ'}
+  ];
 
   constructor(
     private goinhoService: GoinhoService,
@@ -32,7 +34,7 @@ export class TaotengoinhoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getDanhSachNganHang();
+    // this.getDanhSachNganHang();
   }
 
   getDanhSachNganHang() {

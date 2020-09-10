@@ -12,6 +12,7 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, flatMap } from 'rxjs/operators';
 import { SearchService } from 'src/app/services/search.service';
 import { NganhangService } from 'src/app/services/nganhang.service';
+import { LiennganhangService } from 'src/app/services/liennganhang.service';
 
 @Component({
   selector: 'app-chuyenkhoan',
@@ -50,6 +51,7 @@ export class ChuyenkhoanComponent implements OnInit {
   constructor(
     private taikhoanthanhtoanService: TaikhoanthanhtoanService,
     private taiKhoanDangNhapService: TaiKhoanDangNhapService,
+    private lienganhangService: LiennganhangService,
     private webStorageSerivce: WebStorageSerivce,
     private searchService: SearchService,
     private nganhangService: NganhangService,
@@ -118,6 +120,27 @@ export class ChuyenkhoanComponent implements OnInit {
       });
 
     } else if (this.selectedBank === 2) {
+      const value = {
+        email: decodeAT.sub,
+        mataikhoandangnhap: decodeAT.mataikhoan,
+        mataikhoanthanhtoan: Number(this.chuyenKhoanModel.accountReceiver)
+      };
+      this.lienganhangService.localFindAccountRSA(value).subscribe((res: any) => {
+        console.log(res);
+        if (res.active === '1') {
+          this.showErorrDialog('Không tìm thấy tài khoản cần chuyển. Vui lòng kiểm tra lại thông tin');
+
+        } else if (res.active === '2') {
+          this.showErorrDialog('Bạn không thể tự chuyển khoản cho các tài khoản của mình');
+
+        } else {
+          this.chuyenKhoanModel.hoTenNguoiNhan = res.hotentaikhoannhan;
+          this.chuyenKhoanModel.hoTenNguoiGui = res.danhsachtaikhoangui[0].hoten;
+          this.danhSachTaiKhoanChuyen = res.danhsachtaikhoangui;
+          this.myStepper.next();
+
+        }
+      });
 
     } else if (this.selectedBank === 3) {
 
@@ -173,8 +196,8 @@ export class ChuyenkhoanComponent implements OnInit {
       return;
     }
 
+    const decodeAT = jwt_decode(this.webStorageSerivce.getLocalStorage('token-info').accessToken);
     if (this.selectedBank === 1) {
-      const decodeAT = jwt_decode(this.webStorageSerivce.getLocalStorage('token-info').accessToken);
       const value = {
         mataikhoancannho: decodeAT.mataikhoan,
         email: decodeAT.sub,
@@ -236,6 +259,63 @@ export class ChuyenkhoanComponent implements OnInit {
       });
 
     } else if (this.selectedBank === 2) {
+      const value = {
+        mataikhoancannho: decodeAT.mataikhoan,
+        email: decodeAT.sub,
+        mataikhoannguoigui: this.chuyenKhoanModel.accountTransfer,
+        tennguoigui: this.chuyenKhoanModel.hoTenNguoiGui,
+        mataikhoannguoinhan: Number(this.chuyenKhoanModel.accountReceiver),
+        tennguoinhan: this.chuyenKhoanModel.hoTenNguoiNhan,
+        sotiengiaodich: this.chuyenKhoanModel.money,
+        noidungchuyenkhoan: this.chuyenKhoanModel.content,
+        nguoitraphi: Number(this.chuyenKhoanModel.selectedPayer),
+        manganhanggui: 1,
+        manganhangnhan: 2,
+        otp: Number(this.chuyenKhoanModel.OTP)
+      };
+      this.lienganhangService.confirmTransferLocalToRSA(value).subscribe((res: any) => {
+        console.log(res);
+        if (res.active === '1') {
+          const fail = this.matDialog.open(DialogErrorsComponent, {
+            disableClose: true,
+            height: '300px',
+            width: '300px',
+            data: { message: 'Chuyển khoản thất bại vì nhập mã OTP sai hoặc hết hiệu lực' }
+          });
+          fail.afterClosed().subscribe(() => {
+            this.reset();
+          });
+
+        } else if (res.active === '0') {
+          const success = this.matDialog.open(DialogErrorsComponent, {
+            disableClose: true,
+            height: '300px',
+            width: '300px',
+            data: { message: 'Chuyển khoản thành công' }
+          });
+          success.afterClosed().subscribe(() => {
+            this.reset();
+          });
+
+        } else {
+          const success = this.matDialog.open(DialogReminderComponent, {
+            disableClose: true,
+            height: '300px',
+            width: '550px',
+            data: {
+              mataikhoancannho: res.mataikhoancannho,
+              mataikhoangoinho: res.mataikhoangoinho,
+              chuoimanguoigoinho: res.chuoimanguoigoinho,
+              hotennguoigoinho: res.hotennguoigoinho,
+              manganhang: res.manganhang,
+              trangthai: res.trangthai
+            }
+          });
+          success.afterClosed().subscribe(() => {
+            this.reset();
+          });
+        }
+      });
 
     } else if (this.selectedBank === 3) {
 
