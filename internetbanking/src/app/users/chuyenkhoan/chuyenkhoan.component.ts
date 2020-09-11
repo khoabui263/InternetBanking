@@ -143,7 +143,27 @@ export class ChuyenkhoanComponent implements OnInit {
       });
 
     } else if (this.selectedBank === 3) {
+      const value = {
+        email: decodeAT.sub,
+        mataikhoandangnhap: decodeAT.mataikhoan,
+        mataikhoanthanhtoan: Number(this.chuyenKhoanModel.accountReceiver)
+      };
+      this.lienganhangService.localFindAccountPGP(value).subscribe((res: any) => {
+        console.log(res);
+        if (res.active === '1') {
+          this.showErorrDialog('Không tìm thấy tài khoản cần chuyển. Vui lòng kiểm tra lại thông tin');
 
+        } else if (res.active === '2') {
+          this.showErorrDialog('Bạn không thể tự chuyển khoản cho các tài khoản của mình');
+
+        } else {
+          this.chuyenKhoanModel.hoTenNguoiNhan = res.hotentaikhoannhan;
+          this.chuyenKhoanModel.hoTenNguoiGui = res.danhsachtaikhoangui[0].hoten;
+          this.danhSachTaiKhoanChuyen = res.danhsachtaikhoangui;
+          this.myStepper.next();
+
+        }
+      });
     }
   }
 
@@ -318,7 +338,63 @@ export class ChuyenkhoanComponent implements OnInit {
       });
 
     } else if (this.selectedBank === 3) {
+      const value = {
+        mataikhoancannho: decodeAT.mataikhoan,
+        email: decodeAT.sub,
+        mataikhoannguoigui: this.chuyenKhoanModel.accountTransfer,
+        tennguoigui: this.chuyenKhoanModel.hoTenNguoiGui,
+        mataikhoannguoinhan: Number(this.chuyenKhoanModel.accountReceiver),
+        tennguoinhan: this.chuyenKhoanModel.hoTenNguoiNhan,
+        sotiengiaodich: this.chuyenKhoanModel.money,
+        noidungchuyenkhoan: this.chuyenKhoanModel.content,
+        nguoitraphi: Number(this.chuyenKhoanModel.selectedPayer),
+        manganhanggui: 1,
+        manganhangnhan: 3,
+        otp: Number(this.chuyenKhoanModel.OTP)
+      };
+      this.lienganhangService.confirmTransferLocalToPGP(value).subscribe((res: any) => {
+        console.log(res);
+        if (res.active === '1') {
+          const fail = this.matDialog.open(DialogErrorsComponent, {
+            disableClose: true,
+            height: '300px',
+            width: '300px',
+            data: { message: 'Chuyển khoản thất bại vì nhập mã OTP sai hoặc hết hiệu lực' }
+          });
+          fail.afterClosed().subscribe(() => {
+            this.reset();
+          });
 
+        } else if (res.active === '0') {
+          const success = this.matDialog.open(DialogErrorsComponent, {
+            disableClose: true,
+            height: '300px',
+            width: '300px',
+            data: { message: 'Chuyển khoản thành công' }
+          });
+          success.afterClosed().subscribe(() => {
+            this.reset();
+          });
+
+        } else {
+          const success = this.matDialog.open(DialogReminderComponent, {
+            disableClose: true,
+            height: '300px',
+            width: '550px',
+            data: {
+              mataikhoancannho: res.mataikhoancannho,
+              mataikhoangoinho: res.mataikhoangoinho,
+              chuoimanguoigoinho: res.chuoimanguoigoinho,
+              hotennguoigoinho: res.hotennguoigoinho,
+              manganhang: res.manganhang,
+              trangthai: res.trangthai
+            }
+          });
+          success.afterClosed().subscribe(() => {
+            this.reset();
+          });
+        }
+      });
     }
 
 

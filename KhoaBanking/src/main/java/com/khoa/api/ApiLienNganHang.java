@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.didisoft.pgp.PGPException;
+import com.didisoft.pgp.exceptions.WrongPasswordException;
 import com.khoa.dto.FindTaiKhoanGuiVaNhanDTO;
 import com.khoa.dto.LichSuGiaoDichDTO;
 import com.khoa.dto.LienNganHangDTO;
@@ -54,6 +56,34 @@ public class ApiLienNganHang {
 			throws NoSuchAlgorithmException, IOException, InvalidKeySpecException, InvalidKeyException,
 			SignatureException {
 		GoiNho otp = otpService.confirmTransferLocalToRSA(lichSuGiaoDichDTO);
+		if(otp == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Chuyển khoản thất bại"));
+			
+		} else if(otp.getMataikhoancannho() == 0) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Chuyển khoản thành công"));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(otp);
+	}
+	
+	@PostMapping("localFindAccountPGP")
+	public ResponseEntity localFindAccountPGP(@RequestBody LienNganHangDTO lienNganHangDTO) {
+		FindTaiKhoanGuiVaNhanDTO danhSachTaiKhoan = lienNganHangService.localFindAccountPGP(lienNganHangDTO);
+		if(danhSachTaiKhoan.getHotentaikhoannhan().equals("1")) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Không có tài khoản nào hết"));
+			
+		} else if(danhSachTaiKhoan.getHotentaikhoannhan().equals("2")) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("2", "Bạn không thể tự chuyển khoản cho các tài khoản của mình"));
+			
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(danhSachTaiKhoan);
+	}
+	
+	@PostMapping("confirmTransferLocalToPGP")
+	public ResponseEntity confirmTransferLocalToPGP(@RequestBody LichSuGiaoDichDTO lichSuGiaoDichDTO)
+			throws NoSuchAlgorithmException, IOException, InvalidKeySpecException, InvalidKeyException,
+			SignatureException, WrongPasswordException, PGPException {
+		GoiNho otp = otpService.confirmTransferLocalToPGP(lichSuGiaoDichDTO);
 		if(otp == null) {
 			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Chuyển khoản thất bại"));
 			

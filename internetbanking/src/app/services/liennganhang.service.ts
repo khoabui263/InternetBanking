@@ -18,4 +18,12 @@ export class LiennganhangService {
   confirmTransferLocalToRSA(value: any) {
     return this.http.post(`${environment.apiUrl}/liennganhang/confirmTransferLocalToRSA`, value);
   }
+
+  localFindAccountPGP(value: any) {
+    return this.http.post(`${environment.apiUrl}/liennganhang/localFindAccountPGP`, value);
+  }
+
+  confirmTransferLocalToPGP(value: any) {
+    return this.http.post(`${environment.apiUrl}/liennganhang/confirmTransferLocalToPGP`, value);
+  }
 }

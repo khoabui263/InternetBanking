@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -37,7 +39,9 @@ public class LichSuGiaoDich {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ngaygiaodich;
 	
+	@Type(type="text")
 	private String signatureNguoiGui;
+	@Type(type="text")
 	private String signatureNguoiNhan;
 	private int maloaigiaodich;
 	

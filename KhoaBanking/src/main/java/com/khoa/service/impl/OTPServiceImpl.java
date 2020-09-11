@@ -1,10 +1,13 @@
 package com.khoa.service.impl;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,6 +19,11 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+
+import com.didisoft.pgp.PGPException;
+import com.didisoft.pgp.PGPLib;
+import com.didisoft.pgp.SignatureCheckResult;
+import com.didisoft.pgp.exceptions.WrongPasswordException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -47,8 +55,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class OTPServiceImpl implements OTPService {
 
-	private static final String SECRET = "localtorsa";
+	private static final String SECRETRSA = "localtorsa";
 	private static final String URLCONFIRMTRANSFERLOCALTORSA = "http://localhost:8080/api/rsa/confirmTranfer";
+	private static final String SECRETPGP = "localtopgp";
+	private static final String URLCONFIRMTRANSFERLOCALTOPGP = "http://localhost:8080/api/pgp/confirmTranfer";
 
 	@Autowired
 	private OTPRepository oTPRepository;
@@ -197,7 +207,7 @@ public class OTPServiceImpl implements OTPService {
 		if (otp == null || now.getTime() < otp.getThoigianluu().getTime() || now.getTime() > (otp.getThoigianluu().getTime() + 3600000)) {
 			return null;
 		}
-//		oTPRepository.delete(otp);
+		oTPRepository.delete(otp);
 		
 		// Lấy private key và public key
 		String stringprv = new String(Files.readAllBytes(Paths.get("privatersa64.pem")));
@@ -209,7 +219,7 @@ public class OTPServiceImpl implements OTPService {
 		
 		Signature sign = Signature.getInstance("SHA512withRSA"); // Dùng thuật toán SHA256 để ký, hoặc dùng các loại khác
 		sign.initSign(pvt2);
-		String chuoiSignature = "local" + "|" + lichSuGiaoDichDTO.getMataikhoannguoinhan() + "|" + timeStampe + "|" + SECRET;
+		String chuoiSignature = "local" + "|" + lichSuGiaoDichDTO.getMataikhoannguoinhan() + "|" + timeStampe + "|" + SECRETRSA;
 		byte[] bytes1 = chuoiSignature.getBytes("UTF-8");
 		sign.update(bytes1);
 		byte[] signature = sign.sign();
@@ -229,7 +239,7 @@ public class OTPServiceImpl implements OTPService {
 		body.setNoiDungChuyen(lichSuGiaoDichDTO.getNoidungchuyenkhoan());
 		String chuoiGoc = "local" + "|" + lichSuGiaoDichDTO.getMataikhoannguoinhan() + "|"
 				+ chuoiSoTienGiaoDich + "|" + lichSuGiaoDichDTO.getNoidungchuyenkhoan() + "|"
-				+ timeStampe + "|" + SECRET;
+				+ timeStampe + "|" + SECRETRSA;
 		System.out.println("Gói tin gốc: " + chuoiGoc);
 		String chuoiHash = BCrypt.hashpw(chuoiGoc, BCrypt.gensalt(12));
 		body.setChuoiMaHoa(chuoiHash);
@@ -247,13 +257,8 @@ public class OTPServiceImpl implements OTPService {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("Authorization", "Bearer " + accessToken);
 
-		// HttpEntity<String>: To get result as String.
 		HttpEntity<LienNganHangDTO> entity = new HttpEntity<>(body, headers);
-
-		// RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
-
-		// Gửi yêu cầu với phương thức GET, và các thông tin Headers.
 		ResponseEntity<LienNganHangDTO> response = restTemplate.exchange(URLCONFIRMTRANSFERLOCALTORSA, HttpMethod.POST, entity,
 				LienNganHangDTO.class);
 		LienNganHangDTO result = response.getBody();
@@ -273,7 +278,7 @@ public class OTPServiceImpl implements OTPService {
 		boolean verified = true;
 		Signature sign2 = Signature.getInstance("SHA512withRSA");
 		sign2.initVerify(pub2);
-		String chuoiSignatureBenNhan = "200-OK|" + SECRET;
+		String chuoiSignatureBenNhan = "200-OK|" + SECRETRSA;
 		byte[] bytes2 = chuoiSignatureBenNhan.getBytes("UTF-8");
 		sign2.update(bytes2);
 		
@@ -300,8 +305,6 @@ public class OTPServiceImpl implements OTPService {
 			return null;
 		}
 		
-		
-
 		LichSuGiaoDich lichSuGiaoDich = new LichSuGiaoDich();		
 		lichSuGiaoDich.setMaloaigiaodich(2);
 		lichSuGiaoDich.setManganhanggui(1);
@@ -317,6 +320,156 @@ public class OTPServiceImpl implements OTPService {
 		lichSuGiaoDich.setTennguoinhan(lichSuGiaoDichDTO.getTennguoinhan());
 		lichSuGiaoDich.setSignatureNguoiGui(signature.toString());
 		lichSuGiaoDich.setSignatureNguoiNhan(result.getSignature().toString());
+		lichSuGiaoDich.setTrangthai(1);
+		
+		LichSuGiaoDich lichSuGiaoDichRSA = lichSuGiaoDichRepository.save(lichSuGiaoDich);
+		
+		if (lichSuGiaoDichRSA == null) {
+			return null;
+		}
+
+		GoiNho goiNho = goiNhoRepository.findFirstByMataikhoancannhoAndMataikhoangoinho(
+				lichSuGiaoDichDTO.getMataikhoancannho(), lichSuGiaoDichDTO.getMataikhoannguoinhan());
+		if (goiNho == null) {
+			return new GoiNho(0, lichSuGiaoDichDTO.getMataikhoancannho(), lichSuGiaoDichDTO.getMataikhoannguoinhan(),
+					lichSuGiaoDichDTO.getMataikhoannguoinhan() + "", lichSuGiaoDichDTO.getTennguoinhan(), "",
+					lichSuGiaoDichDTO.getManganhangnhan(), 1);
+		}
+		return new GoiNho(0);
+	}
+
+	@Override
+	public GoiNho confirmTransferLocalToPGP(LichSuGiaoDichDTO lichSuGiaoDichDTO) throws IOException,
+			NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException, WrongPasswordException, PGPException {
+		OTP otp = oTPRepository.findByMaotpAndEmail(lichSuGiaoDichDTO.getOtp(), lichSuGiaoDichDTO.getEmail());
+		Date now = new Date();
+		long timeStampe = now.getTime();
+		if (otp == null || now.getTime() < otp.getThoigianluu().getTime() || now.getTime() > (otp.getThoigianluu().getTime() + 3600000)) {
+			return null;
+		}
+		oTPRepository.delete(otp);
+		
+		String chuoiSignature = "local" + "|" + lichSuGiaoDichDTO.getMataikhoannguoinhan() + "|" + timeStampe + "|" + SECRETRSA;
+		PrintWriter writer = new PrintWriter("message.txt", "UTF-8");
+		writer.print(chuoiSignature);
+		writer.close();
+
+		PGPLib pgp = new PGPLib();
+		boolean asciiArmor = true;
+
+		pgp.signFile("message.txt",
+				"privatepgp.txt",
+				"khoa",
+				"sign.pgp",
+				asciiArmor);
+
+		BufferedReader br = new BufferedReader(new FileReader("sign.pgp"));
+		String temp = "";
+		String signature = "";
+		while ((temp = br.readLine()) != null) {
+			if (temp.equals("-----BEGIN PGP MESSAGE-----")
+					|| temp.equals("Version: Didisoft OpenPGP Library for Java 3.2")
+					|| temp.equals("-----END PGP MESSAGE-----")) {
+				continue;
+			} else {
+				signature += temp;
+			}
+		}
+		System.out.println("Signature gửi đi" + signature);
+		
+		long soTienGiaoDich = Long.parseLong(lichSuGiaoDichDTO.getSotiengiaodich());
+		if (lichSuGiaoDichDTO.getNguoitraphi() == 0) {
+			soTienGiaoDich = soTienGiaoDich - 5000;
+		}
+		String chuoiSoTienGiaoDich = soTienGiaoDich+"";
+		
+		LienNganHangDTO body = new LienNganHangDTO();
+		body.setPartnerCode("local");
+		body.setTimeStampe(timeStampe);
+		body.setMataikhoanthanhtoan(lichSuGiaoDichDTO.getMataikhoannguoinhan());
+		body.setSoTienChuyen(chuoiSoTienGiaoDich);
+		body.setNoiDungChuyen(lichSuGiaoDichDTO.getNoidungchuyenkhoan());
+		String chuoiGoc = "local" + "|" + lichSuGiaoDichDTO.getMataikhoannguoinhan() + "|"
+				+ chuoiSoTienGiaoDich + "|" + lichSuGiaoDichDTO.getNoidungchuyenkhoan() + "|"
+				+ timeStampe + "|" + SECRETPGP;
+		System.out.println("Gói tin gốc: " + chuoiGoc);
+		String chuoiHash = BCrypt.hashpw(chuoiGoc, BCrypt.gensalt(12));
+		body.setChuoiMaHoa(chuoiHash);
+		body.setSignaturePGP(signature);
+
+		
+		final long JWT_EXPIRATION = 1000 * 60 * 60 * 24 * 10;
+		String accessToken = Jwts.builder().setSubject(lichSuGiaoDichDTO.getEmail()).setIssuedAt(now)
+				.setExpiration(new Date(now.getTime() + JWT_EXPIRATION)).signWith(SignatureAlgorithm.HS512, "yeet")
+				.compact();
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
+		// Yêu cầu trả về định dạng JSON
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("Authorization", "Bearer " + accessToken);
+
+		HttpEntity<LienNganHangDTO> entity = new HttpEntity<>(body, headers);
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<LienNganHangDTO> response = restTemplate.exchange(URLCONFIRMTRANSFERLOCALTOPGP, HttpMethod.POST, entity,
+				LienNganHangDTO.class);
+		LienNganHangDTO result = response.getBody();
+		System.out.println(result.getStatus() + " - " + result.getMessage());
+		
+		if(result.getStatus() != 0) {
+			return null;
+		}
+
+		boolean verifySignature = false;
+		SignatureCheckResult signatureCheck = pgp.verifyAndExtract("sign.pgp", "publicpgp.txt", "OUTPUT.txt");
+		if (signatureCheck == SignatureCheckResult.SignatureVerified) {
+			System.out.println("The signature is valid.");
+			verifySignature = true;
+		} else if (signatureCheck == SignatureCheckResult.SignatureBroken) {
+			System.out.println("Message corrupted or signature forged");
+		} else if (signatureCheck == SignatureCheckResult.PublicKeyNotMatching) {
+			System.out.println("Signature not matching provided public key (the message is from another sender)");
+		} else {
+			System.out.println("No signature found in message");
+		}
+		
+		if(verifySignature == false) {
+			return null;
+		}
+		
+		TaiKhoanThanhToan taiKhoanGui = taiKhoanThanhToanRepository.findFirstByMataikhoanthanhtoan(lichSuGiaoDichDTO.getMataikhoannguoigui());
+		long soDuNguoiGui = Long.parseLong(taiKhoanGui.getSodu());
+		long soTienChuyen = Long.parseLong(lichSuGiaoDichDTO.getSotiengiaodich());
+		
+		if (lichSuGiaoDichDTO.getNguoitraphi() == 0) {
+			soDuNguoiGui = soDuNguoiGui - soTienChuyen;
+
+		} else if (lichSuGiaoDichDTO.getNguoitraphi() == 1) {
+			soDuNguoiGui = soDuNguoiGui - soTienChuyen - 5000;
+		}
+
+		taiKhoanGui.setSodu(soDuNguoiGui + "");
+		TaiKhoanThanhToan taiKhoanGuiSauGiaoDich = taiKhoanThanhToanRepository.save(taiKhoanGui);
+
+		if (taiKhoanGuiSauGiaoDich == null) {
+			return null;
+		}
+		
+		LichSuGiaoDich lichSuGiaoDich = new LichSuGiaoDich();		
+		lichSuGiaoDich.setMaloaigiaodich(2);
+		lichSuGiaoDich.setManganhanggui(1);
+		lichSuGiaoDich.setManganhangnhan(3);
+		lichSuGiaoDich.setManguoigui(taiKhoanGuiSauGiaoDich.getMataikhoandangnhap());
+		lichSuGiaoDich.setManguoinhan(6); // Demo
+		lichSuGiaoDich.setMataikhoannguoigui(lichSuGiaoDichDTO.getMataikhoannguoigui());
+		lichSuGiaoDich.setMataikhoannguoinhan(lichSuGiaoDichDTO.getMataikhoannguoinhan());
+		lichSuGiaoDich.setNgaygiaodich(new Date());
+		lichSuGiaoDich.setSotiengiaodich(lichSuGiaoDichDTO.getSotiengiaodich());
+		lichSuGiaoDich.setNoidungchuyenkhoan(lichSuGiaoDichDTO.getNoidungchuyenkhoan());
+		lichSuGiaoDich.setTennguoigui(lichSuGiaoDichDTO.getTennguoigui());
+		lichSuGiaoDich.setTennguoinhan(lichSuGiaoDichDTO.getTennguoinhan());
+		lichSuGiaoDich.setSignatureNguoiGui(signature);
+		lichSuGiaoDich.setSignatureNguoiNhan(result.getSignaturePGP());
 		lichSuGiaoDich.setTrangthai(1);
 		
 		LichSuGiaoDich lichSuGiaoDichRSA = lichSuGiaoDichRepository.save(lichSuGiaoDich);

@@ -8,6 +8,8 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
+import com.didisoft.pgp.PGPException;
+import com.didisoft.pgp.exceptions.WrongPasswordException;
 import com.khoa.dto.LichSuGiaoDichDTO;
 import com.khoa.entity.GoiNho;
 import com.khoa.entity.OTP;
@@ -23,4 +25,5 @@ public interface OTPService {
 	OTP findByMaotpAndEmail(int maOTP, String email, String newPassWord);
 	GoiNho confirmTransfer(LichSuGiaoDichDTO lichSuGiaoDichDTO);
 	GoiNho confirmTransferLocalToRSA(LichSuGiaoDichDTO lichSuGiaoDichDTO) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException;
+	GoiNho confirmTransferLocalToPGP(LichSuGiaoDichDTO lichSuGiaoDichDTO) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException, WrongPasswordException, PGPException;
 }

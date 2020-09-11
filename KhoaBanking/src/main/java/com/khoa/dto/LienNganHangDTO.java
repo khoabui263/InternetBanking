@@ -15,9 +15,18 @@ public class LienNganHangDTO {
 	private int status;
 	private String message;
 	private byte[] signature;
+	private String signaturePGP;
 	
 	public LienNganHangDTO() {
 		
+	}
+
+	public String getSignaturePGP() {
+		return signaturePGP;
+	}
+
+	public void setSignaturePGP(String signaturePGP) {
+		this.signaturePGP = signaturePGP;
 	}
 
 	public String getEmail() {

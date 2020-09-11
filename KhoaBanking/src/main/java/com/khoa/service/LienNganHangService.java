@@ -5,4 +5,5 @@ import com.khoa.dto.LienNganHangDTO;
 
 public interface LienNganHangService {
 	FindTaiKhoanGuiVaNhanDTO localFindAccountRSA(LienNganHangDTO lienNganHangDTO);
+	FindTaiKhoanGuiVaNhanDTO localFindAccountPGP(LienNganHangDTO lienNganHangDTO);
 }
