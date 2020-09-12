@@ -17,5 +17,11 @@ export class AuthenticateService {
     return this.http.get(`${environment.apiUrl}/test`);
   }
 
+  sendEmailCheckAccountExisted(value: any) {
+    return this.http.post(`${environment.apiUrl}/authenticate/sendEmailCheckAccountExisted`, value);
+  }
 
+  forgetPassword(value: any) {
+    return this.http.post(`${environment.apiUrl}/authenticate/forgetPassword`, value);
+  }
 }

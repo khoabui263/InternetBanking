@@ -26,4 +26,5 @@ public interface OTPService {
 	GoiNho confirmTransfer(LichSuGiaoDichDTO lichSuGiaoDichDTO);
 	GoiNho confirmTransferLocalToRSA(LichSuGiaoDichDTO lichSuGiaoDichDTO) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException;
 	GoiNho confirmTransferLocalToPGP(LichSuGiaoDichDTO lichSuGiaoDichDTO) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, InvalidKeyException, SignatureException, WrongPasswordException, PGPException;
+	OTP forgetPassword(int otp, String email, String newpassword);
 }

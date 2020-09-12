@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.khoa.dto.ChangePassWordDTO;
 import com.khoa.dto.LoginDTO;
 import com.khoa.dto.ResultMessage;
 import com.khoa.dto.TaiKhoanDangNhapDTO;
 import com.khoa.dto.TokensDTO;
+import com.khoa.entity.OTP;
 import com.khoa.entity.TaiKhoanDangNhap;
 import com.khoa.repository.TaiKhoanDangNhapRepository;
+import com.khoa.service.OTPService;
 import com.khoa.service.TaiKhoanDangNhapService;
 
 import io.jsonwebtoken.Jwts;
@@ -47,6 +50,9 @@ public class ApiAuthenticate {
 	
 	@Autowired
 	private TaiKhoanDangNhapService taiKhoanDangNhapService;
+	
+	@Autowired
+	private OTPService oTPService;
 	
 	@PostMapping("login")
 	public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
@@ -115,5 +121,34 @@ public class ApiAuthenticate {
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resultMessage.ShowResult("1", "lỗi r"));
 	}
-
+	
+	@PostMapping("sendEmailCheckAccountExisted")
+	public ResponseEntity sendEmailCheckAccountExisted(@RequestBody TaiKhoanDangNhapDTO taiKhoanDangNhapDTO) {
+		TaiKhoanDangNhapDTO existed = taiKhoanDangNhapService.sendEmailCheckAccountExisted(taiKhoanDangNhapDTO.getEmail());
+		if(existed == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Không tìm thấy tài khoản"));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Gửi mail thành công"));
+	}
+	
+	@PostMapping("changePassword")
+	public ResponseEntity changePassword(@RequestBody TaiKhoanDangNhapDTO taiKhoanDangNhapDTO) {
+		TaiKhoanDangNhapDTO existed = taiKhoanDangNhapService.sendEmailCheckAccountExisted(taiKhoanDangNhapDTO.getEmail());
+		if(existed == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Không tìm thấy tài khoản"));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Gửi mail thành công"));
+	}
+	
+	@PostMapping("forgetPassword")
+	public ResponseEntity forgetPassword(@RequestBody ChangePassWordDTO changePassWordDTO) {
+		OTP otp = oTPService.forgetPassword(changePassWordDTO.getOtp(), changePassWordDTO.getEmail(), changePassWordDTO.getNewpassword());
+		if(otp == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("1", "Cập nhật mật khẩu thất bại"));
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Cập nhật mật khẩu thành công"));
+	}
 }

@@ -24,4 +24,5 @@ public interface TaiKhoanDangNhapService {
 	List<TaiKhoanDangNhap> searchTaiKhoanNhanVien(String email);
 	TaiKhoanDangNhap updateEmployee(TaiKhoanDangNhap taiKhoanDangNhap);
 	TaiKhoanDangNhap deleteEmployee(int mataikhoan);
+	TaiKhoanDangNhapDTO sendEmailCheckAccountExisted(String email);
 }

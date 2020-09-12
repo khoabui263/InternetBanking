@@ -488,4 +488,27 @@ public class OTPServiceImpl implements OTPService {
 		return new GoiNho(0);
 	}
 
+	@Override
+	public OTP forgetPassword(int otp, String email, String newpassword) {
+		OTP otpExisted = oTPRepository.findByMaotpAndEmail(otp, email);
+		Date now = new Date();
+		
+		if (otpExisted == null || now.getTime() < otpExisted.getThoigianluu().getTime()
+				|| now.getTime() > (otpExisted.getThoigianluu().getTime() + 3600000)) {
+			return null;
+		}
+
+		TaiKhoanDangNhap taiKhoanDangNhap = taiKhoanDangNhapRepository.findByEmailOrSodienthoai(email, email);
+		String hashPassWord = BCrypt.hashpw(newpassword, BCrypt.gensalt(12));
+		taiKhoanDangNhap.setMatkhau(hashPassWord);
+		TaiKhoanDangNhap taiKhoanSauKhiUpdate = taiKhoanDangNhapRepository.save(taiKhoanDangNhap);
+		oTPRepository.delete(otpExisted);
+
+		if (taiKhoanSauKhiUpdate == null) {
+			return null;
+		}
+
+		return new OTP();
+	}
+
 }

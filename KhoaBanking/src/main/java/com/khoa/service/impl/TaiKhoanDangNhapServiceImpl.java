@@ -233,4 +233,20 @@ public class TaiKhoanDangNhapServiceImpl implements TaiKhoanDangNhapService {
 		return taiKhoanDangNhapRepository.save(taiKhoanExisted);
 	}
 
+	@Override
+	public TaiKhoanDangNhapDTO sendEmailCheckAccountExisted(String email) {
+		TaiKhoanDangNhap taiKhoanExisted= taiKhoanDangNhapRepository.findByEmailOrSodienthoai(email, email);
+		if(taiKhoanExisted == null) {
+			return null;
+		}
+		
+		Random rd = new Random();
+		int number = rd.nextInt((999999 - 100000) + 1) + 100000;
+		oTPRepository.save(new OTP(number, email, new Date()));
+		
+		emailUtil.transfer(number+"", email, EmailTypesConstant.CHECKACCOUNTEXISTED);
+		return new TaiKhoanDangNhapDTO();
+		
+	}
+
 }
