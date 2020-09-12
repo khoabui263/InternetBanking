@@ -17,7 +17,8 @@ public class LichSuGiaoDichDetailsDTO {
 	private int manganhangnhan;
 	private String tennganhangnhan;
 	private Date ngaygiaodich;
-	private String signature;
+	private String signaturebengui;
+	private String signaturebennhan;
 	private int maloaigiaodich;
 	private String tenloaigiaodich;
 	private int trangthai;
@@ -106,11 +107,17 @@ public class LichSuGiaoDichDetailsDTO {
 	public void setNgaygiaodich(Date ngaygiaodich) {
 		this.ngaygiaodich = ngaygiaodich;
 	}
-	public String getSignature() {
-		return signature;
+	public String getSignaturebengui() {
+		return signaturebengui;
 	}
-	public void setSignature(String signature) {
-		this.signature = signature;
+	public void setSignaturebengui(String signaturebengui) {
+		this.signaturebengui = signaturebengui;
+	}
+	public String getSignaturebennhan() {
+		return signaturebennhan;
+	}
+	public void setSignaturebennhan(String signaturebennhan) {
+		this.signaturebennhan = signaturebennhan;
 	}
 	public int getMaloaigiaodich() {
 		return maloaigiaodich;

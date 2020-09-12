@@ -20,4 +20,5 @@ public interface LichSuGiaoDichService {
 	DanhSachLichSuGiaoDichDTO getNguoiKhacTraNo(DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO);
 	List<LichSuGiaoDich> getLichSuGiaoDichByEmployee(DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO);
 	LichSuGiaoDichDetailsDTO getLichSuGiaoDichByEmployeeDetails(int id);
+	List<LichSuGiaoDich> getLichSuGiaoDichByAdmin(DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO);
 }

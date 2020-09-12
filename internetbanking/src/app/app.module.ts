@@ -27,6 +27,7 @@ import { DialogThongbaonoComponent } from './users/dialogs/dialog-thongbaono/dia
 import { DialogEmployeelichsugiaodichComponent } from './employees/dialogs/dialog-employeelichsugiaodich/dialog-employeelichsugiaodich.component';
 import { DialogCapnhatnhanvienComponent } from './admin/dialogs/dialog-capnhatnhanvien/dialog-capnhatnhanvien.component';
 import { DialogXoanhanvienComponent } from './admin/dialogs/dialog-xoanhanvien/dialog-xoanhanvien.component';
+import { DialogAdminlichsugiaodichComponent } from './admin/dialogs/dialog-adminlichsugiaodich/dialog-adminlichsugiaodich.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +46,8 @@ import { DialogXoanhanvienComponent } from './admin/dialogs/dialog-xoanhanvien/d
     DialogThongbaonoComponent,
     DialogEmployeelichsugiaodichComponent,
     DialogCapnhatnhanvienComponent,
-    DialogXoanhanvienComponent
-
+    DialogXoanhanvienComponent,
+    DialogAdminlichsugiaodichComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,8 +71,8 @@ import { DialogXoanhanvienComponent } from './admin/dialogs/dialog-xoanhanvien/d
     DialogThongbaonoComponent,
     DialogEmployeelichsugiaodichComponent,
     DialogCapnhatnhanvienComponent,
-    DialogXoanhanvienComponent
-
+    DialogXoanhanvienComponent,
+    DialogAdminlichsugiaodichComponent
   ],
   providers: [
     DatePipe,

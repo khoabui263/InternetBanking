@@ -255,12 +255,40 @@ public class LichSuGiaoDichServiceImpl implements LichSuGiaoDichService {
 		chiTietLichSuGiaoDich.setManganhangnhan(lichSuGiaoDich.getManganhangnhan());
 		chiTietLichSuGiaoDich.setTennganhangnhan(lichSuGiaoDich.getNganhangnhan().getTennganhang());
 		chiTietLichSuGiaoDich.setNgaygiaodich(lichSuGiaoDich.getNgaygiaodich());
-		chiTietLichSuGiaoDich.setSignature(lichSuGiaoDich.getSignatureNguoiGui());
+		chiTietLichSuGiaoDich.setSignaturebengui(lichSuGiaoDich.getSignatureNguoiGui());
+		chiTietLichSuGiaoDich.setSignaturebennhan(lichSuGiaoDich.getSignatureNguoiNhan());
 		chiTietLichSuGiaoDich.setMaloaigiaodich(lichSuGiaoDich.getMaloaigiaodich());
 		chiTietLichSuGiaoDich.setTenloaigiaodich(lichSuGiaoDich.getLoaigiaodich().getTenloaigiaodich());
 		chiTietLichSuGiaoDich.setTrangthai(lichSuGiaoDich.getTrangthai());
 		
 		return chiTietLichSuGiaoDich;
+	}
+
+	@Override
+	public List<LichSuGiaoDich> getLichSuGiaoDichByAdmin(DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO) {
+		DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String start = danhSachLichSuGiaoDichDTO.getNgaybatdau();
+		String end = danhSachLichSuGiaoDichDTO.getNgayketthuc();
+
+		try {
+			Date startDate = sourceFormat.parse(start);
+			Date endDate = sourceFormat.parse(end);
+
+			Calendar cal = new GregorianCalendar();
+			cal.setTime(endDate);
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+			cal.add(Calendar.MINUTE, -1);
+			endDate = cal.getTime();
+
+			return lichSuGiaoDichRepository.findByManganhangguiAndNgaygiaodichBetweenOrManganhangnhanAndNgaygiaodichBetween(
+					danhSachLichSuGiaoDichDTO.getBank(), startDate, endDate, danhSachLichSuGiaoDichDTO.getBank(), startDate,
+					endDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 }

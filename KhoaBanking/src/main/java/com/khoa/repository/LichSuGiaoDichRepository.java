@@ -21,5 +21,6 @@ public interface LichSuGiaoDichRepository extends JpaRepository<LichSuGiaoDich, 
 	public List<LichSuGiaoDich> findByManguoinhanAndNgaygiaodichBetweenAndMaloaigiaodich(int manguoinhan, Date before30d, Date now, int maloaigiaodich);
 	
 	public List<LichSuGiaoDich> findByManguoiguiAndNgaygiaodichBetweenOrManguoinhanAndNgaygiaodichBetween(int manguoigui, Date before30d, Date now, int manguoinhan, Date before30dd, Date nowd);
-
+	
+	public List<LichSuGiaoDich> findByManganhangguiAndNgaygiaodichBetweenOrManganhangnhanAndNgaygiaodichBetween(int manganhanggui, Date before30d, Date now, int manganhangnhan, Date before30dd, Date nowd);
 }

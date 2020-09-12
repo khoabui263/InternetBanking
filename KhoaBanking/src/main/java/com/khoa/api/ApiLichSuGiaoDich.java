@@ -74,4 +74,13 @@ public class ApiLichSuGiaoDich {
 		}
 		return ResponseEntity.ok(chiTietLichSuGiaoDich);
 	}
+	
+	@PostMapping("getLichSuGiaoDichByAdmin")
+	public ResponseEntity getLichSuGiaoDichByAdmin(@RequestBody DanhSachLichSuGiaoDichDTO danhSachLichSuGiaoDichDTO) {
+		List<LichSuGiaoDich> danhSach = lichSuGiaoDichService.getLichSuGiaoDichByAdmin(danhSachLichSuGiaoDichDTO);
+		if(danhSach == null) {
+			return ResponseEntity.status(HttpStatus.OK).body(resultMessage.ShowResult("0", "Chưa có giao dịch nào"));
+		}
+		return ResponseEntity.ok(danhSach);
+	}
 }

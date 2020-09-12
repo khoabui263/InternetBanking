@@ -8,6 +8,7 @@ import com.khoa.entity.LichSuGiaoDich;
 public class DanhSachLichSuGiaoDichDTO {
 	private int manguoigui;
 	private String email;
+	private int bank;
 	private String ngaybatdau;
 	private String ngayketthuc;
 	private List<LichSuGiaoDich> danhSachChuyenTien;
@@ -15,6 +16,12 @@ public class DanhSachLichSuGiaoDichDTO {
 	private List<LichSuGiaoDich> danhSachTraNo;
 	private List<LichSuGiaoDich> danhSachNguoiKhacTraNo;
 	
+	public int getBank() {
+		return bank;
+	}
+	public void setBank(int bank) {
+		this.bank = bank;
+	}
 	public int getManguoigui() {
 		return manguoigui;
 	}

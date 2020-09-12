@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         const chuaThanhToan = this.matDialog.open(DialogThongbaonoComponent, {
           disableClose: true,
           height: '300px',
-          width: '300px',
+          width: '500px',
           data: { message: 'Bạn có 1 món nợ chưa thanh toán. Bạn có muốn chuyển trang tới đó không ?' }
         });
         chuaThanhToan.afterClosed().subscribe(data => {
@@ -65,7 +65,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         const chuaThanhToan = this.matDialog.open(DialogThongbaonoComponent, {
           disableClose: true,
           height: '300px',
-          width: '300px',
+          width: '500px',
           data: { message: 'Có người từ chối thanh toán nợ cho bạn. Bạn có muốn chuyển trang tới đó không ?' }
         });
         chuaThanhToan.afterClosed().subscribe(data => {

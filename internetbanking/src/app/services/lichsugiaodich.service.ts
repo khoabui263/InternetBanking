@@ -36,4 +36,12 @@ export class LichsugiaodichService {
   getLichSuGiaoDichByEmployeeDetails(value: any) {
     return this.http.post(`${environment.apiUrl}/lichsugiaodich/getLichSuGiaoDichByEmployeeDetails`, value);
   }
+
+  getLichSuGiaoDichByAdmin(value: any) {
+    return this.http.post(`${environment.apiUrl}/lichsugiaodich/getLichSuGiaoDichByAdmin`, value);
+  }
+
+  getLichSuGiaoDichByAdminDetails(value: any) {
+    return this.http.post(`${environment.apiUrl}/lichsugiaodich/getLichSuGiaoDichByAdminDetails`, value);
+  }
 }
